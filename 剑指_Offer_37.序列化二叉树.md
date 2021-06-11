@@ -34,11 +34,13 @@
 
 **提示:** 输入输出格式与 LeetCode 目前使用的方式一致，详情请参阅 [LeetCode 序列化二叉树的格式](https://leetcode-cn.com/faq/#binary-tree)。你并非必须采取这种方式，你也可以采用其他的方法解决这个问题。
 
- 
+
+
+![](https://github.com/Jonny-Jaia/PublicNoteBooks/blob/main/img/serdeser.jpg?raw=true)
 
 **示例 1：**
 
-![img](%E5%89%91%E6%8C%87%20Offer%2037.%20%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8C%E5%8F%89%E6%A0%91.assets/serdeser.jpg)
+
 
 ```
 输入：root = [1,2,3,null,null,4,5]
@@ -126,6 +128,6 @@ class Codec:
    	- 左右子节点存在一处为空->此时只需要往结果里面添加None
     - 左右根节点之后为空->判断当前同一层级节点是否有后续子节点
       	- 如果有的话，当前根节点添加两个None
-      	- 
+         	- 
 
 2. 将列表数据直接str进行转化返回
