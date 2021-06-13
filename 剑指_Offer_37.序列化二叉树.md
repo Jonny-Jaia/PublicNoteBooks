@@ -112,22 +112,168 @@ class Codec:
 
 # 题目解析
 
-首先序列化的核心在于将原有的不同数据结构进行转化，以实现实际需求。
+**序列化操作**--层序遍历
 
-从序列化来看：
+**反序列化**--利用递推将得到的序列化列表进行推理
 
-粗略分析需求: 1.遍历二叉树 2.保存元素并返回
 
-详细分析：
 
-1. 遍历（层序遍历）
+## 序列化
 
-   1.1 判断当前元素是否为空，不为空则加入返回列表
-   为空的情况分别为：
+**算法流程：**
 
-   	- 左右子节点存在一处为空->此时只需要往结果里面添加None
-    - 左右根节点之后为空->判断当前同一层级节点是否有后续子节点
-      	- 如果有的话，当前根节点添加两个None
-         	- 
+**核心思路：借助队列对二叉树实现层序遍历，进而将所有元素进行返回**
 
-2. 将列表数据直接str进行转化返回
+**1. 特例处理：**当root为空返回”[]“
+
+**2. 初始化：**当前队列queue = [root]; res = []
+
+**3. 层序遍历：**
+
+- **返回条件**：当queue为空
+
+```python
+while queue:
+```
+
+- **循环操作**
+
+  - 节点出队，node
+
+  ```python
+  node = queue.popleft()
+  ```
+
+  - 若node不为空
+
+  ```python
+  res.append(str(node.val)
+  queue.append(node.left)
+  queue.append(node.right)
+  ```
+
+  - 为空
+
+  ```python
+  res.append("null")
+  ```
+
+- **返回值:**
+
+  ```
+  return '[' + ','.join(res) + ']'
+  ```
+
+  
+
+## 反序列化
+
+**算法流程：**
+
+**核心思路：借助序列化列表的位置关系**
+
+**1. 特例处理：**当data为空返回”null“
+
+**2. 初始化：**序列化列表，对数据进行处理得到vals列表；root = TreeNode(int(vals[0]));空队列queue;初始化标记i=1
+
+```python
+queue.append(root)
+i = 1
+```
+
+**3. 按层构建二叉树：**
+
+- **返回条件**：当queue为空
+
+```python
+while queue:
+```
+
+- **循环操作**
+
+  - 节点出队，node
+
+  ```python
+  node = queue.popleft()
+  ```
+
+  - 若node不为空
+
+  ```python
+  if vals[i] != "null":
+      node.left = TreeNode(int(vals[i]))
+      queue.append(node.left)
+   i += 1
+  if vals[i] != "null":
+      node.right = TreeNode(int(vals[i]))
+      queue.append(node.right)
+   i += 1
+  ```
+
+- **返回值:**
+
+  ```
+  return root
+  ```
+
+  
+
+# 通过代码
+
+```python
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Codec:
+
+    def serialize(self, root):
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+        if not root:return "[]"
+        # 初始化
+        queue = collections.deque()
+        res = []
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
+            if node:
+                res.append(str(node.val))
+                queue.append(node.left)
+                queue.append(node.right)
+            else:res.append("null")
+        return '['+','.join(res)+']'
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+        
+        :type data: str
+        :rtype: TreeNode
+        """
+        if data == "null":return
+        vals, i = data[1:-1].split(','),1
+        queue = collections.deque()
+        root = TreeNode(int(vals[i]))
+		queue.append(root)
+        while queue:
+            node = queue.popleft()
+            if node != "null":
+                node.left = TreeNode(int(vals[i]))
+                queue.append(node.left)
+            i += 1
+            if node != "null":
+                node.right = TreeNode(int(vals[i]))
+                queue.append(node.right)
+            i += 1
+        return root 
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.deserialize(codec.serialize(root))
+```
+
