@@ -83,16 +83,39 @@ c, res = list(s), []
 **5.构建递归函数**
 
 ```python
-
+dfs(x):
+    # 递归结束条件
+    if x == len(c)-1:
+        res.append(''.join(c))
+        return 
+    # 初始化过渡变量
+    tempdict = set()
+    for i in range(x, len(c)):
+        if c[i] in tempdict:continue
+        tempdict.add(c[i])
+        c[i], c[x] = c[x], c[i]
+        dfs(x+1)
+        c[i], c[x] = c[x], c[i]
 ```
-
-
 
 # 通过代码
 
 ```python
 class Solution:
     def permutation(self, s: str) -> List[str]:
-        
+        c, res = list(s), []
+        def dfs(x):
+            if x == len(c)-1:
+                res.append(''.join(c))
+                return
+        	temp = set()
+            for i in range(x, len(c)):
+                if c[i] in temp:continue
+                temp.add(c[i])
+                c[i],c[x]=c[x],c[i]
+                
+                c[i],c[x]=c[x],c[i]
+        dfs(0)
+        return res
 ```
 
