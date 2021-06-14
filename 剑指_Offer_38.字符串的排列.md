@@ -1,4 +1,4 @@
-# 题目
+# 剑指 Offer 38. 字符串的排列
 
 - #### [剑指 Offer 38. 字符串的排列](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
 
