@@ -104,6 +104,6 @@ class Solution:
         for num in nums:
             if not vote:x = num
             vote += 1 if num == x else -1
-        r
+        return x
 ```
 
