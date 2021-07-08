@@ -1,13 +1,5 @@
 # 《黑马程序员》C++提高编程(三)
 
-![img](https://csdnimg.cn/release/blogv2/dist/pc/img/reprint.png)
-
-[生命是有光的](https://blog.csdn.net/Augenstern_QXL) 2021-05-25 20:31:15 ![img](https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes.png) 4293 ![img](https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png) 收藏 95
-
-分类专栏： [C++](https://blog.csdn.net/augenstern_qxl/category_11087209.html) 文章标签： [c++](https://www.csdn.net/tags/Ntjacg0sNDk3Ny1ibG9n.html)
-
-版权
-
 # C++提高编程
 
 ## 0.写在前面
