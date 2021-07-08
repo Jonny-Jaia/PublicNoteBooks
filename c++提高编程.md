@@ -1449,41 +1449,41 @@ int main(){
 **示例：**
 
 ```cpp
-//字符串拼接
-void test01()
-{
-	string str1 = "我";
-
-	str1 += "爱玩游戏";
-
-	cout << "str1 = " << str1 << endl;
-	
-	str1 += ':';
-
-	cout << "str1 = " << str1 << endl;
-
-	string str2 = "LOL DNF";
-
-	str1 += str2;
-
-	cout << "str1 = " << str1 << endl;
-
-	string str3 = "I";
-	str3.append(" love ");
-	str3.append("game abcde", 4);
-	//str3.append(str2);
-	str3.append(str2, 4, 3); // 从下标4位置开始 ，截取3个字符，拼接到字符串末尾
-	cout << "str3 = " << str3 << endl;
+#include <iostream>
+#include <string>
+using namespace std;
+//string的构造函数
+/*
+- `string& operator+=(const char* str);` //重载+=操作符
+- `string& operator+=(const char c);` //重载+=操作符
+- `string& operator+=(const string& str);` //重载+=操作符
+- `string& append(const char *s);` //把字符串s连接到当前字符串结尾
+- `string& append(const char *s, int n);` //把字符串s的前n个字符连接到当前字符串结尾
+- `string& append(const string &s);` //同operator+=(const string& str)
+- `string& append(const string &s, int pos, int n);`//字符串s中从pos开始的n个字符连接到字符串结尾
+ */
+void test01(){
+    string s1 = "a";
+    s1 += "abc";
+    cout<<s1<<endl;
+    s1 += 'd';
+    cout<<s1<<endl;
+    string s2 = "qwer";
+    s1 += s2;
+    cout<<s1<<endl;
+    s1.append("ty");
+    cout<<s1<<endl;
+    s1.append(" mygame",3);
+    cout<<s1<<endl;
+    s1.append(s2);
+    cout<<s1<<endl;
+    s1.append("MYLOVE",2,5);
+    cout<<s1<<endl;
 }
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334
 ```
 
 总结：字符串拼接的重载版本很多，初学阶段记住几种即可
@@ -1511,49 +1511,45 @@ int main() {
 **示例：**
 
 ```cpp
-//查找和替换
-void test01()
-{
-	//查找
-	string str1 = "abcdefgde";
+#include <iostream>
+#include <string>
+using namespace std;
+//string的查找和替换
+/*
 
-	int pos = str1.find("de");
+- `int find(const string& str, int pos = 0) const;` //查找str第一次出现位置,从pos开始查找
+- `int find(const char* s, int pos = 0) const;` //查找s第一次出现位置,从pos开始查找
+- `int find(const char* s, int pos, int n) const;` //从pos位置查找s的前n个字符第一次位置
+- `int find(const char c, int pos = 0) const;` //查找字符c第一次出现位置
+- `int rfind(const string& str, int pos = npos) const;` //查找str最后一次位置,从pos开始查找
+- `int rfind(const char* s, int pos = npos) const;` //查找s最后一次出现位置,从pos开始查找
+- `int rfind(const char* s, int pos, int n) const;` //从pos查找s的前n个字符最后一次位置
+- `int rfind(const char c, int pos = 0) const;` //查找字符c最后一次出现位置
+- `string& replace(int pos, int n, const string& str);` //替换从pos开始n个字符为字符串str
+- `string& replace(int pos, int n,const char* s);` //替换从pos开始的n个字符为字符串s
 
-	if (pos == -1)
-	{
-		cout << "未找到" << endl;
-	}
-	else
-	{
-		cout << "pos = " << pos << endl;
-	}
-	
-
-	pos = str1.rfind("de");
-
-	cout << "pos = " << pos << endl;
+ */
+void test01(){
+    //查找
+    string s1="abcdefgde";
+    //rfind和find的区别
+    //rfind从右往左查找 find从左往右查找
+    cout<<s1.find("de")<<endl;
+    cout<<s1.rfind("de")<<endl;
+}
+void test02(){
+    //替换
+    string s1="abcdefgde";
+    //从1到3字符替换为1111
+    s1.replace(1,3,"1111");
+    cout<<s1<<endl;
 
 }
-
-void test02()
-{
-	//替换
-	string str1 = "abcdefgde";
-	str1.replace(1, 3, "1111");
-
-	cout << "str1 = " << str1 << endl;
+int main(){
+    test01();
+    test02();
+    return 0;
 }
-
-int main() {
-
-	//test01();
-	//test02();
-
-	system("pause");
-
-	return 0;
-}
-123456789101112131415161718192021222324252627282930313233343536373839404142
 ```
 
 总结：
