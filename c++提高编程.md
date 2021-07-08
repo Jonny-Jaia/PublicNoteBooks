@@ -1630,39 +1630,37 @@ string中单个字符存取方式有两种
 **示例：**
 
 ```cpp
-void test01()
-{
-	string str = "hello world";
+#include <iostream>
+#include <string>
+using namespace std;
+//string的字符存取
+void test01(){
+    string s1 = "hello";
+//    cout<<s1<<endl;
+    //通过[]访问单个字符
+    for (int i = 0; i < s1.size(); ++i) {
+        cout<<s1[i]<<" ";
+    }
+    cout<<endl;
+    // 通过at方式访问单个字符
+    for (int i = 0; i < s1.size(); ++i) {
+        cout<<s1.at(i)<<" ";
+    }
+    cout<<endl;
 
-	for (int i = 0; i < str.size(); i++)
-	{
-		cout << str[i] << " ";
-	}
-	cout << endl;
-
-	for (int i = 0; i < str.size(); i++)
-	{
-		cout << str.at(i) << " ";
-	}
-	cout << endl;
-
-
-	//字符修改
-	str[0] = 'x';
-	str.at(1) = 'x';
-	cout << str << endl;
-	
+    //修改单个字符
+    s1[0] = 'x';
+    cout<<s1<<endl;
+    s1.at(1) = 'w';
+    cout<<s1<<endl;
 }
 
-int main() {
 
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+//    test02();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132
 ```
 
 总结：string字符串中单个字符存取有两种方式，利用 [ ] 或 at
@@ -1683,26 +1681,26 @@ int main() {
 **示例：**
 
 ```cpp
-//字符串插入和删除
-void test01()
-{
-	string str = "hello";
-	str.insert(1, "111");
-	cout << str << endl;
-
-	str.erase(1, 3);  //从1号位置开始3个字符
-	cout << str << endl;
+#include <iostream>
+#include <string>
+using namespace std;
+//string的插入和删除
+void test01(){
+    string s1 = "hello";
+    //插入
+    s1.insert(1,"111");
+    cout<<s1<<endl;
+    //删除
+    s1.erase(1,3);
+    cout<<s1<<endl;
 }
 
-int main() {
 
-	test01();
+int main(){
+    test01();
 
-	system("pause");
-
-	return 0;
+    return 0;
 }
-12345678910111213141516171819
 ```
 
 **总结**：插入和删除的起始下标都是从0开始
@@ -1720,30 +1718,27 @@ int main() {
 **示例：**
 
 ```cpp
-//子串
-void test01()
-{
-
-	string str = "abcdefg";
-	string subStr = str.substr(1, 3);
-	cout << "subStr = " << subStr << endl;
-
-	string email = "hello@sina.com";
-	int pos = email.find("@");
-	string username = email.substr(0, pos);
-	cout << "username: " << username << endl;
-
+#include <iostream>
+#include <string>
+using namespace std;
+//string的子串
+void test01(){
+    string s1 = "hello";
+    string substr = s1.substr(1,3);
+    cout<<substr<<endl;
+}
+//实用操作
+void test02(){
+    string email = "ZhangSan@qq.com";
+    int pos = email.find("@");
+    string userName = email.substr(0,pos);
+    cout<<userName<<endl;
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test02();
+    return 0;
 }
-1234567891011121314151617181920212223
 ```
 
 **总结**：灵活的运用求子串功能，可以在实际开发中获取有效的信息
