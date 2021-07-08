@@ -1582,38 +1582,40 @@ int main(){
 **示例：**
 
 ```cpp
-//字符串比较
-void test01()
-{
+#include <iostream>
+#include <string>
+using namespace std;
+//string的比较操作
+/*
 
-	string s1 = "hello";
-	string s2 = "aello";
+- `int compare(const string &s) const;` //与字符串s比较
+- `int compare(const char *s) const;` //与字符串s比较
 
-	int ret = s1.compare(s2);
-
-	if (ret == 0) {
-		cout << "s1 等于 s2" << endl;
-	}
-	else if (ret > 0)
-	{
-		cout << "s1 大于 s2" << endl;
-	}
-	else
-	{
-		cout << "s1 小于 s2" << endl;
-	}
+ */
+void test01(){
+    string s1 = "hello";
+    string s2 = "hello";
+    cout<<"= ->"<<s1.compare(s2)<<endl;
+    s1 = "xello";
+    cout<<"> ->"<<s1.compare(s2)<<endl;
+    s1 = "hello";
+    s2 = "xello";
+    cout<<"< ->"<<s1.compare(s2)<<endl;
 
 }
+void test02(){
+    //替换
+    string s1="abcdefgde";
+    //从1到3字符替换为1111
+    s1.replace(1,3,"1111");
+    cout<<s1<<endl;
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
 }
-12345678910111213141516171819202122232425262728293031
+int main(){
+    test01();
+//    test02();
+    return 0;
+}
 ```
 
 总结：字符串对比主要是用于比较两个字符串是否相等，判断谁大谁小的意义并不是很大
