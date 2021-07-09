@@ -2400,6 +2400,42 @@ int main(){
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/9.
+//
+#include <iostream>
+#include <string>
+#include <deque>
+using namespace std;
+//deque容器的大小操作
+void printDeque(const deque<int> &d1){
+    for(deque<int>::const_iterator it = d1.begin(); it!=d1.end();it++){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
+}
+void test01(){
+    deque<int> d1;
+    for (int i = 0; i < 10; ++i) {
+        d1.push_back(i);//尾插
+    }
+    printDeque(d1);
+    if(d1.empty()){
+        cout<<"empty"<<endl;
+    }else{
+        cout<<"size:"<<d1.size()<<endl;
+    }
+    //重新指定大小
+//    d1.resize(15);//默认零填充
+    d1.resize(15,1);
+    printDeque(d1);
+    d1.resize(5);
+    printDeque(d1);
+}
+int main(){
+    test01();
+    return 0;
+}
 #include <deque>
 
 void printDeque(const deque<int>& d) 
@@ -2457,6 +2493,8 @@ int main() {
 - 返回元素个数 — size
 - 重新指定个数 — resize
 
+
+
 #### 3.3.5 deque 插入和删除
 
 **功能描述：**
@@ -2493,94 +2531,58 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/9.
+//
+#include <iostream>
+#include <string>
 #include <deque>
-
-void printDeque(const deque<int>& d) 
-{
-	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++) {
-		cout << *it << " ";
-
-	}
-	cout << endl;
+using namespace std;
+//deque容器的插入与删除
+void printDeque(const deque<int> &d1){
+    for(deque<int>::const_iterator it = d1.begin(); it!=d1.end();it++){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
 }
-//两端操作
-void test01()
-{
-	deque<int> d;
-	//尾插
-	d.push_back(10);
-	d.push_back(20);
-	//头插
-	d.push_front(100);
-	d.push_front(200);
-
-	printDeque(d);
-
-	//尾删
-	d.pop_back();
-	//头删
-	d.pop_front();
-	printDeque(d);
+void test01(){
+    deque<int> d1;
+    for (int i = 0; i < 10; ++i) {
+        d1.push_back(i);//尾插
+    }
+    //头插
+    d1.push_front(100);
+    d1.push_front(200);
+    printDeque(d1);
+    //尾删
+    d1.pop_back();
+    //头删
+    d1.pop_front();
+    printDeque(d1);
+    //指定插入
+    d1.insert(d1.begin()+1,1000);
+    printDeque(d1);
+    d1.insert(d1.begin()+3,2,3000);
+    printDeque(d1);
+    deque<int>d2;
+    d2.push_back(10);
+    d2.push_back(20);
+    d2.push_back(30);
+    d1.insert(d1.begin()+1,d2.begin(),d2.end());//区间插入
+    printDeque(d1);
+    //删除
+    d1.erase(d1.begin());
+    printDeque(d1);
+    d1.erase(d1.begin()+2,d1.end()-5);//区间删除
+    printDeque(d1);
+    d1.clear();
+//    d1.erase(d1.begin(),d1.end());
+    printDeque(d1);
 }
-
-//插入
-void test02()
-{
-	deque<int> d;
-	d.push_back(10);
-	d.push_back(20);
-	d.push_front(100);
-	d.push_front(200);
-	printDeque(d);
-
-	d.insert(d.begin(), 1000);
-	printDeque(d);
-
-	d.insert(d.begin(), 2,10000);
-	printDeque(d);
-
-	deque<int>d2;
-	d2.push_back(1);
-	d2.push_back(2);
-	d2.push_back(3);
-
-	d.insert(d.begin(), d2.begin(), d2.end());
-	printDeque(d);
-
+int main(){
+    test01();
+    return 0;
 }
-
-//删除
-void test03()
-{
-	deque<int> d;
-	d.push_back(10);
-	d.push_back(20);
-	d.push_front(100);
-	d.push_front(200);
-	printDeque(d);
-
-	d.erase(d.begin());
-	printDeque(d);
-
-	d.erase(d.begin(), d.end());
-	d.clear();
-	printDeque(d);
-}
-
-int main() {
-
-	//test01();
-
-	//test02();
-
-    test03();
-    
-	system("pause");
-
-	return 0;
-}
-
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687
 ```
 
 总结：
@@ -2590,6 +2592,8 @@ int main() {
 - 尾删 — pop_back
 - 头插 — push_front
 - 头删 — pop_front
+
+
 
 #### 3.3.6 deque 数据存取
 
@@ -2607,53 +2611,41 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/9.
+//
+#include <iostream>
+#include <string>
 #include <deque>
-
-void printDeque(const deque<int>& d) 
-{
-	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++) {
-		cout << *it << " ";
-
-	}
-	cout << endl;
+using namespace std;
+//deque容器的数据存取
+void printDeque(const deque<int> &d1){
+//    for(deque<int>::const_iterator it = d1.begin(); it!=d1.end();it++){
+//        cout<<*it<<" ";
+//    }
+    //[]访问
+//    for (int i = 0; i < d1.size(); ++i) {
+//        cout<<d1[i]<<" ";
+//    }
+    //at访问
+    for (int i = 0; i < d1.size(); ++i) {
+        cout<<d1.at(i)<<" ";
+    }
+    cout<<endl;
 }
-
-//数据存取
-void test01()
-{
-
-	deque<int> d;
-	d.push_back(10);
-	d.push_back(20);
-	d.push_front(100);
-	d.push_front(200);
-
-	for (int i = 0; i < d.size(); i++) {
-		cout << d[i] << " ";
-	}
-	cout << endl;
-
-
-	for (int i = 0; i < d.size(); i++) {
-		cout << d.at(i) << " ";
-	}
-	cout << endl;
-
-	cout << "front:" << d.front() << endl;
-
-	cout << "back:" << d.back() << endl;
-
+void test01(){
+    deque<int> d1;
+    for (int i = 0; i < 10; ++i) {
+        d1.push_back(i*10);//尾插
+    }
+    printDeque(d1);
+    cout<<"front:"<<d1.front()<<endl;
+    cout<<"back:"<<d1.back()<<endl;
 }
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546
 ```
 
 总结：
@@ -2661,6 +2653,8 @@ int main() {
 - 除了用迭代器获取deque容器中元素，[ ]和at也可以
 - front返回容器第一个元素
 - back返回容器最后一个元素
+
+
 
 #### 3.3.7 deque 排序
 
@@ -2675,42 +2669,39 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/9.
+//
+#include <iostream>
+#include <string>
 #include <deque>
 #include <algorithm>
-
-void printDeque(const deque<int>& d) 
-{
-	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++) {
-		cout << *it << " ";
-
-	}
-	cout << endl;
+using namespace std;
+//deque容器的数据存取
+void printDeque(const deque<int> &d1){
+    for(deque<int>::const_iterator it = d1.begin(); it!=d1.end();it++){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
 }
-
-void test01()
-{
-
-	deque<int> d;
-	d.push_back(10);
-	d.push_back(20);
-	d.push_front(100);
-	d.push_front(200);
-
-	printDeque(d);
-	sort(d.begin(), d.end());
-	printDeque(d);
-
+void test01(){
+    deque<int> d1;
+    d1.push_back(10);
+    d1.push_back(30);
+    d1.push_back(20);
+    d1.push_front(40);
+    d1.push_front(15);
+    d1.push_front(35);
+    printDeque(d1);
+    //默认升序 
+    // 对于支持随机访问的迭代器的容器都可以用sort算法排序
+    sort(d1.begin(), d1.end());
+    printDeque(d1);
 }
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435
 ```
 
 总结：sort算法非常实用，使用时包含头文件 algorithm即可
