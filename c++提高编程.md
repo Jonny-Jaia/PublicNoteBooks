@@ -2265,6 +2265,8 @@ deque内部有个**中控器**，维护每段缓冲区中的内容，缓冲区�
 
 - deque容器的迭代器也是支持随机访问的
 
+
+
 #### 3.3.2 deque构造函数
 
 **功能描述：**
@@ -2281,47 +2283,39 @@ deque内部有个**中控器**，维护每段缓冲区中的内容，缓冲区�
 **示例：**
 
 ```cpp
+#include <iostream>
+#include <string>
 #include <deque>
-
-void printDeque(const deque<int>& d) 
-{
-	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++) {
-		cout << *it << " ";
-
-	}
-	cout << endl;
+using namespace std;
+//deque构造函数
+void printDeque(const deque<int> &d1){
+    for(deque<int>::const_iterator it = d1.begin(); it!=d1.end();it++){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
 }
-//deque构造
-void test01() {
-
-	deque<int> d1; //无参构造函数
-	for (int i = 0; i < 10; i++)
-	{
-		d1.push_back(i);
-	}
-	printDeque(d1);
-	deque<int> d2(d1.begin(),d1.end());
-	printDeque(d2);
-
-	deque<int>d3(10,100);
-	printDeque(d3);
-
-	deque<int>d4 = d3;
-	printDeque(d4);
+void test01(){
+    deque<int> d1;
+    for (int i = 0; i < 10; ++i) {
+        d1.push_back(i);//尾插
+    }
+    printDeque(d1);
+    deque<int> d2(d1);
+    printDeque(d2);
+    deque<int> d3(d1.begin(),d1.end());
+    printDeque(d3);
+    deque<int> d4(10,100);
+    printDeque(d4);
 }
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637
 ```
 
 **总结：**deque容器和vector容器的构造方式几乎一致，灵活使用即可
+
+
 
 #### 3.3.3 deque赋值操作
 
@@ -2338,52 +2332,48 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/9.
+//
+#include <iostream>
+#include <string>
 #include <deque>
-
-void printDeque(const deque<int>& d) 
-{
-	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++) {
-		cout << *it << " ";
-
-	}
-	cout << endl;
+using namespace std;
+//deque赋值操作
+void printDeque(const deque<int> &d1){
+    for(deque<int>::const_iterator it = d1.begin(); it!=d1.end();it++){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
 }
-//赋值操作
-void test01()
-{
-	deque<int> d1;
-	for (int i = 0; i < 10; i++)
-	{
-		d1.push_back(i);
-	}
-	printDeque(d1);
-
-	deque<int>d2;
-	d2 = d1;
-	printDeque(d2);
-
-	deque<int>d3;
-	d3.assign(d1.begin(), d1.end());
-	printDeque(d3);
-
-	deque<int>d4;
-	d4.assign(10, 100);
-	printDeque(d4);
-
+void test01(){
+    deque<int> d1;
+    for (int i = 0; i < 10; ++i) {
+        d1.push_back(i);//尾插
+    }
+    printDeque(d1);
+    // =
+    deque<int> d2;
+    d2 = d1;
+    printDeque(d2);
+    //assign
+    deque<int> d3;
+    d3.assign(d1.begin(),d1.end());
+    printDeque(d3);
+    deque<int> d4;
+    d4.assign(10,100);
+    printDeque(d4);
+}
+int main(){
+    test01();
+    return 0;
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
-}
-123456789101112131415161718192021222324252627282930313233343536373839404142
 ```
 
 总结：deque赋值操作也与vector相同，需熟练掌握
+
+
 
 #### 3.3.4 deque大小操作
 
