@@ -2725,116 +2725,82 @@ int main(){
 **示例代码：**
 
 ```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+#include <deque>
+#include <algorithm>
+#include <ctime>
+using namespace std;
+//五名选手
+//10名评委
 //选手类
-class Person
-{
+class Person{
 public:
-	Person(string name, int score)
-	{
-		this->m_Name = name;
-		this->m_Score = score;
-	}
-
-	string m_Name; //姓名
-	int m_Score;  //平均分
+    Person(string n, int s){
+        this->name = n;
+        this->score = s;
+    }
+    string name;
+    int score;//平均分
 };
-
-void createPerson(vector<Person>&v)
-{
-	string nameSeed = "ABCDE";
-	for (int i = 0; i < 5; i++)
-	{
-		string name = "选手";
-		name += nameSeed[i];
-
-		int score = 0;
-
-		Person p(name, score);
-
-		//将创建的person对象 放入到容器中
-		v.push_back(p);
-	}
+void createPerson(vector<Person> &v){
+    string nameSeed = "ABCDE";
+    for (int i = 0; i < 5; ++i) {
+        string name = "Player";
+        name += nameSeed[i];
+        int score = 0;
+        Person p(name,score);
+        //将创建的Person对象放入容器
+        v.push_back(p);
+    }
 }
-
-//打分
-void setScore(vector<Person>&v)
-{
-	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
-	{
-		//将评委的分数 放入到deque容器中
-		deque<int>d;
-		for (int i = 0; i < 10; i++)
-		{
-			int score = rand() % 41 + 60;  // 60 ~ 100
-			d.push_back(score);
-		}
-
-		//cout << "选手： " << it->m_Name << " 打分： " << endl;
-		//for (deque<int>::iterator dit = d.begin(); dit != d.end(); dit++)
-		//{
-		//	cout << *dit << " ";
-		//}
-		//cout << endl;
-
-		//排序
-		sort(d.begin(), d.end());
-
-		//去除最高和最低分
-		d.pop_back();
-		d.pop_front();
-
-		//取平均分
-		int sum = 0;
-		for (deque<int>::iterator dit = d.begin(); dit != d.end(); dit++)
-		{
-			sum += *dit; //累加每个评委的分数
-		}
-
-		int avg = sum / d.size();
-
-		//将平均分 赋值给选手身上
-		it->m_Score = avg;
-	}
-
+void showPerson(vector<Person> &v){
+    for(vector<Person>::iterator it = v.begin();it!=v.end();it++){
+        cout<<(*it).name<<", "<<(*it).score<<endl;
+    }
 }
+void setScore(vector<Person> &v){
 
-void showScore(vector<Person>&v)
-{
-	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
-	{
-		cout << "姓名： " << it->m_Name << " 平均分： " << it->m_Score << endl;
-	}
+    for(vector<Person>::iterator it = v.begin();it!=v.end();it++){
+        //将评委的分数放入deque容器中
+        deque<int>d;
+        for (int i = 0; i < 10; ++i) {
+            int score = rand()%41+60;//60~100
+            d.push_back(score);
+        }
+        sort(d.begin(), d.end());
+        //去除最高最低分
+        d.pop_back();
+        d.pop_front();
+        //取平均分
+        int sum = 0;
+        for(deque<int>::iterator dit = d.begin();dit!=d.end();dit++){
+            sum += (*dit);
+        }
+        int avg = sum/ d.size();
+        //将平均分放入选手中
+        it->score =avg;
+    }
 }
-
 int main() {
-
-	//随机数种子
-	srand((unsigned int)time(NULL));
-
-	//1、创建5名选手
-	vector<Person>v;  //存放选手容器
-	createPerson(v);
-
-	//测试
-	//for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
-	//{
-	//	cout << "姓名： " << (*it).m_Name << " 分数： " << (*it).m_Score << endl;
-	//}
-
-	//2、给5名选手打分
-	setScore(v);
-
-	//3、显示最后得分
-	showScore(v);
-
-	system("pause");
-
-	return 0;
+    //随机数种子
+    srand((unsigned  int)time(NULL));
+    //创建五名选手
+    vector<Person>v;//存放选手的容器
+    createPerson(v);
+//    showPerson(v);
+    //打分
+    setScore(v);
+    showPerson(v);
+    //显示得分
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106
 ```
 
 **总结：** 选取不同的容器操作数据，可以提升代码的效率
+
+
 
 ### 3.5 stack容器
 
