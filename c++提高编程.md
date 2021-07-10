@@ -2913,6 +2913,8 @@ int main(){
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210525131310596.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0F1Z2Vuc3Rlcm5fUVhM,size_16,color_FFFFFF,t_70#pic_center)
 
+
+
 #### 3.6.2 queue 常用接口
 
 功能描述：栈容器常用的对外接口
@@ -2941,64 +2943,47 @@ int main(){
 **示例：**
 
 ```cpp
-#include <queue>
+#include <iostream>
 #include <string>
-class Person
-{
+#include <queue>
+using namespace std;
+//队列
+class Person{
 public:
-	Person(string name, int age)
-	{
-		this->m_Name = name;
-		this->m_Age = age;
-	}
-
-	string m_Name;
-	int m_Age;
+    Person(string n, int a){
+        this->name = n;
+        this->age = a;
+    }
+    string name;
+    int age;
 };
+void test01(){
+    queue<Person>q;
+    Person p1("Zhangsan",20);
+    Person p2("LiSi",30);
+    Person p3("Wangming",40);
 
-void test01() {
+    //入队
+    q.push(p1);
+    q.push(p2);
+    q.push(p3);
+    cout<<q.size()<<endl;
+    //判断只要队列不为空，查看队头、队尾、出队
+    while (!q.empty()){
+        //查看队头
+        cout<<q.front().name<<":"<<q.front().age<<endl;
+        //查看队尾
+        cout<<q.back().name<<":"<<q.back().age<<endl;
 
-	//创建队列
-	queue<Person> q;
-
-	//准备数据
-	Person p1("唐僧", 30);
-	Person p2("孙悟空", 1000);
-	Person p3("猪八戒", 900);
-	Person p4("沙僧", 800);
-
-	//向队列中添加元素  入队操作
-	q.push(p1);
-	q.push(p2);
-	q.push(p3);
-	q.push(p4);
-
-	//队列不提供迭代器，更不支持随机访问	
-	while (!q.empty()) {
-		//输出队头元素
-		cout << "队头元素-- 姓名： " << q.front().m_Name 
-              << " 年龄： "<< q.front().m_Age << endl;
-        
-		cout << "队尾元素-- 姓名： " << q.back().m_Name  
-              << " 年龄： " << q.back().m_Age << endl;
-        
-		cout << endl;
-		//弹出队头元素
-		q.pop();
-	}
-
-	cout << "队列大小为：" << q.size() << endl;
+        //
+        q.pop();
+    }
+    cout<<q.size()<<endl;
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657
 ```
 
 总结：
@@ -3009,6 +2994,8 @@ int main() {
 - 返回队尾元素 — back
 - 判断队是否为空 — empty
 - 返回队列大小 — size
+
+
 
 ### 3.7 list容器
 
@@ -3057,48 +3044,47 @@ List有一个重要的性质，插入操作和删除操作都不会造成原有l
 **示例：**
 
 ```cpp
+#include <iostream>
+#include <string>
 #include <list>
-
-void printList(const list<int>& L) {
-
-	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+//链表构造函数
+void printList(const list<int> &lst){
+    for(list<int>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< *it <<" ";
+    }
+    cout<<endl;
 }
+void test01(){
+    list<int>lst;
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_back(30);
+    lst.push_back(40);
+    lst.push_back(50);
 
-void test01()
-{
-	list<int>L1;
-	L1.push_back(10);
-	L1.push_back(20);
-	L1.push_back(30);
-	L1.push_back(40);
+    printList(lst);
 
-	printList(L1);
-
-	list<int>L2(L1.begin(),L1.end());
-	printList(L2);
-
-	list<int>L3(L2);
-	printList(L3);
-
-	list<int>L4(10, 1000);
-	printList(L4);
+    //区间构造
+    list<int> lst2(lst.begin(),lst.end());
+    printList(lst2);
+    //拷贝构造
+    list<int> lst3(lst2);
+    printList(lst3);
+    //n个elm
+    list<int> lst4(10,1000);
+    printList(lst4);
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435363738
+
 ```
 
 总结：list构造方式同其他几个STL常用容器，熟练掌握即可
+
+
 
 #### 3.7.3 list 赋值和交换
 
@@ -3116,79 +3102,47 @@ int main() {
 **示例：**
 
 ```cpp
+#include <iostream>
+#include <string>
 #include <list>
-
-void printList(const list<int>& L) {
-
-	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+//链表赋值与交换
+void printList(const list<int> &lst){
+    for(list<int>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< *it <<" ";
+    }
+    cout<<endl;
 }
+void test01(){
+    list<int>lst;
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_back(30);
+    lst.push_back(40);
+    lst.push_back(50);
+    printList(lst);
 
-//赋值和交换
-void test01()
-{
-	list<int>L1;
-	L1.push_back(10);
-	L1.push_back(20);
-	L1.push_back(30);
-	L1.push_back(40);
-	printList(L1);
+    list<int> lst2;
+    lst2 = lst;
+    printList(lst2);
 
-	//赋值
-	list<int>L2;
-	L2 = L1;
-	printList(L2);
+    list<int> lst3;
+    lst3.assign(lst2.begin(), lst2.end());
+    printList(lst3);
 
-	list<int>L3;
-	L3.assign(L2.begin(), L2.end());
-	printList(L3);
+    list<int> lst4;
+    lst4.assign(10, 100);
+    printList(lst4);
 
-	list<int>L4;
-	L4.assign(10, 100);
-	printList(L4);
-
+    //交换
+    lst.swap(lst4);
+    printList(lst);
+    printList(lst4);
 }
-
-//交换
-void test02()
-{
-
-	list<int>L1;
-	L1.push_back(10);
-	L1.push_back(20);
-	L1.push_back(30);
-	L1.push_back(40);
-
-	list<int>L2;
-	L2.assign(10, 100);
-
-	cout << "交换前： " << endl;
-	printList(L1);
-	printList(L2);
-
-	cout << endl;
-
-	L1.swap(L2);
-
-	cout << "交换后： " << endl;
-	printList(L1);
-	printList(L2);
-
-}
-
 int main() {
-
-	//test01();
-
-	test02();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172
 ```
 
 总结：list赋值和交换操作能够灵活运用即可
@@ -3211,60 +3165,50 @@ int main() {
 
 - `resize(num, elem);` //重新指定容器的长度为num，若容器变长，则以elem值填充新位置。
 
-  ```
-    	 	 						    //如果容器变短，则末尾超出容器长度的元素被删除。
-  1
-  ```
+  ​										//如果容器变短，则末尾超出容器长度的元素被删除。
+
+  
 
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <list>
-
-void printList(const list<int>& L) {
-
-	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+//链表大小操作
+void printList(const list<int> &lst){
+    for(list<int>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< *it <<" ";
+    }
+    cout<<endl;
 }
-
-//大小操作
-void test01()
-{
-	list<int>L1;
-	L1.push_back(10);
-	L1.push_back(20);
-	L1.push_back(30);
-	L1.push_back(40);
-
-	if (L1.empty())
-	{
-		cout << "L1为空" << endl;
-	}
-	else
-	{
-		cout << "L1不为空" << endl;
-		cout << "L1的大小为： " << L1.size() << endl;
-	}
-
-	//重新指定大小
-	L1.resize(10);
-	printList(L1);
-
-	L1.resize(2);
-	printList(L1);
+void test01(){
+    list<int>lst;
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_back(30);
+    lst.push_back(40);
+    lst.push_back(50);
+    printList(lst);
+    if(lst.empty()){
+        cout<<"empty！"<<endl;
+    } else{
+        cout<<"size:"<<lst.size()<<endl;
+    }
+    lst.resize(10,200);
+    printList(lst);
+    lst.resize(2);
+    printList(lst);
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445
+
 ```
 
 总结：
@@ -3272,6 +3216,8 @@ int main() {
 - 判断是否为空 — empty
 - 返回元素个数 — size
 - 重新指定个数 — resize
+
+
 
 #### 3.7.5 list 插入和删除
 
@@ -3296,71 +3242,57 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <list>
-
-void printList(const list<int>& L) {
-
-	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+//链表插入与删除
+void printList(const list<int> &lst){
+    for(list<int>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< *it <<" ";
+    }
+    cout<<endl;
 }
+void test01(){
+    list<int>lst;
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_back(30);
+    lst.push_back(40);
+    lst.push_back(50);
+    printList(lst);
 
-//插入和删除
-void test01()
-{
-	list<int> L;
-	//尾插
-	L.push_back(10);
-	L.push_back(20);
-	L.push_back(30);
-	//头插
-	L.push_front(100);
-	L.push_front(200);
-	L.push_front(300);
+    lst.push_front(100);
+    printList(lst);
 
-	printList(L);
+    lst.pop_back();
+    printList(lst);
 
-	//尾删
-	L.pop_back();
-	printList(L);
+    lst.pop_front();
+    printList(lst);
 
-	//头删
-	L.pop_front();
-	printList(L);
+    //insert
+    lst.insert(++lst.begin(),100);//双向迭代器，只能执行++指向下一个位置
+    printList(lst);
 
-	//插入
-	list<int>::iterator it = L.begin();
-	L.insert(++it, 1000);
-	printList(L);
-
-	//删除
-	it = L.begin();
-	L.erase(++it);
-	printList(L);
-
-	//移除
-	L.push_back(10000);
-	L.push_back(10000);
-	L.push_back(10000);
-	printList(L);
-	L.remove(10000);
-	printList(L);
-    
-    //清空
-	L.clear();
-	printList(L);
+    //删除
+    lst.erase(++lst.begin());
+    printList(lst);
+    //移除 所有匹配值
+    lst.push_back(20);
+    lst.push_back(20);
+    lst.push_back(20);
+    lst.push_back(20);
+    lst.remove(20);
+    printList(lst);
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364
 ```
 
 总结：
@@ -3373,6 +3305,8 @@ int main() {
 - 删除 — erase
 - 移除 — remove
 - 清空 — clear
+
+
 
 #### 3.7.6 list 数据存取
 
@@ -3388,38 +3322,42 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <list>
-
-//数据存取
-void test01()
-{
-	list<int>L1;
-	L1.push_back(10);
-	L1.push_back(20);
-	L1.push_back(30);
-	L1.push_back(40);
-
-	
-	//cout << L1.at(0) << endl;//错误 不支持at访问数据
-	//cout << L1[0] << endl; //错误  不支持[]方式访问数据
-	cout << "第一个元素为： " << L1.front() << endl;
-	cout << "最后一个元素为： " << L1.back() << endl;
-
-	//list容器的迭代器是双向迭代器，不支持随机访问
-	list<int>::iterator it = L1.begin();
-	//it = it + 1;//错误，不可以跳跃访问，即使是+1
+using namespace std;
+//链表存取
+void printList(const list<int> &lst){
+    for(list<int>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< *it <<" ";
+    }
+    cout<<endl;
 }
-
+void test01(){
+    list<int>lst;
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_back(30);
+    lst.push_back(40);
+    lst.push_back(50);
+    printList(lst);
+//    不可以用[]，at方式访问list链表容器中的元素
+//    因为其本质是链表，不是用连续线性空间存储数据，迭代器也是不支持随机访问
+    cout<<"front:"<<lst.front()<<endl;
+    cout<<"back:"<<lst.back()<<endl;
+    //验证迭代器是不支持随机访问的
+    list<int>::iterator it = lst.begin();
+    it++;
+    it--;//支持双向
+//    it += 1;//不支持随机访问
+}
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-
-12345678910111213141516171819202122232425262728293031
 ```
 
 总结：
@@ -3427,6 +3365,8 @@ int main() {
 - list容器中不可以通过[]或者at方式访问数据
 - 返回第一个元素 — front
 - 返回最后一个元素 — back
+
+
 
 #### 3.7.7 list 反转和排序
 
@@ -3442,56 +3382,57 @@ int main() {
 **示例：**
 
 ```cpp
-void printList(const list<int>& L) {
-
-	for (list<int>::const_iterator it = L.begin(); it != L.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
+#include <list>
+#include <algorithm>
+using namespace std;
+//list容器的反转和排序
+void printList(const list<int> &lst){
+    for(list<int>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< *it <<" ";
+    }
+    cout<<endl;
 }
-
-bool myCompare(int val1 , int val2)
-{
-	return val1 > val2;
+bool myCompare(int v1,int v2){
+    //降序 ，就让第一个数大于第二个数
+    return v1>v2;
 }
+void test01(){
+    list<int>lst;
+    lst.push_back(10);
+    lst.push_back(20);
+    lst.push_front(30);
+    lst.push_back(40);
+    lst.push_front(50);
+    printList(lst);
 
-//反转和排序
-void test01()
-{
-	list<int> L;
-	L.push_back(90);
-	L.push_back(30);
-	L.push_back(20);
-	L.push_back(70);
-	printList(L);
-
-	//反转容器的元素
-	L.reverse();
-	printList(L);
-
-	//排序
-	L.sort(); //默认的排序规则 从小到大
-	printList(L);
-
-	L.sort(myCompare); //指定规则，从大到小
-	printList(L);
+    lst.reverse();
+    printList(lst);
+    //sort算法只支持可随机访问的容器，不可用标准算法
+    // 不支持随机访问迭代器的容器，内部会提供对应的一些算法
+//    sort(lst.begin(), lst.end());
+//    printList(lst);//报错
+    lst.sort();//默认从小到大
+    printList(lst);
+    lst.sort(myCompare);//降序排序
+    printList(lst);
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243
 ```
 
 总结：
 
 - 反转 — reverse
 - 排序 — sort （成员函数）
+
+
 
 #### 3.7.8 排序案例
 
@@ -3502,82 +3443,83 @@ int main() {
 **示例：**
 
 ```cpp
-#include <list>
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
 #include <string>
-class Person {
+#include <list>
+#include <algorithm>
+using namespace std;
+//list容器的排序案例
+class Person{
 public:
-	Person(string name, int age , int height) {
-		m_Name = name;
-		m_Age = age;
-		m_Height = height;
-	}
-
-public:
-	string m_Name;  //姓名
-	int m_Age;      //年龄
-	int m_Height;   //身高
+    Person(string n, int a, int h){
+        this->age = a;
+        this->height = h;
+        this->name = n;
+    }
+    string name;
+    int age;
+    int height;
 };
-
-
-bool ComparePerson(Person& p1, Person& p2) {
-
-	if (p1.m_Age == p2.m_Age) {
-		return p1.m_Height  > p2.m_Height;
-	}
-	else
-	{
-		return  p1.m_Age < p2.m_Age;
-	}
-
+bool ComparePersonAge(Person &p1,Person &p2){
+    if(p1.age == p2.age){
+        return p1.height<p2.height;
+    }
+    return p1.age<p2.age;
 }
-
-void test01() {
-
-	list<Person> L;
-
-	Person p1("刘备", 35 , 175);
-	Person p2("曹操", 45 , 180);
-	Person p3("孙权", 40 , 170);
-	Person p4("赵云", 25 , 190);
-	Person p5("张飞", 35 , 160);
-	Person p6("关羽", 35 , 200);
-
-	L.push_back(p1);
-	L.push_back(p2);
-	L.push_back(p3);
-	L.push_back(p4);
-	L.push_back(p5);
-	L.push_back(p6);
-
-	for (list<Person>::iterator it = L.begin(); it != L.end(); it++) {
-		cout << "姓名： " << it->m_Name << " 年龄： " << it->m_Age 
-              << " 身高： " << it->m_Height << endl;
-	}
-
-	cout << "---------------------------------" << endl;
-	L.sort(ComparePerson); //排序
-
-	for (list<Person>::iterator it = L.begin(); it != L.end(); it++) {
-		cout << "姓名： " << it->m_Name << " 年龄： " << it->m_Age 
-              << " 身高： " << it->m_Height << endl;
-	}
+bool ComparePersonHeight(Person &p1,Person &p2){
+    if(p1.height==p2.height){
+        return p1.age<p2.age;
+    }
+    return p1.height<p2.height;
 }
+void printList(const list<Person> &lst){
+    for(list<Person>::const_iterator it = lst.begin();it!=lst.end();it++){
+        cout<< (*it).name <<","<<(*it).age<<","<<(*it).height<<endl;
+    }
+    cout<<endl;
+}
+bool myCompare(int v1,int v2){
+    //降序 ，就让第一个数大于第二个数
+    return v1>v2;
+}
+void test01(){
+    list<Person>L;
+    Person p1("刘备", 35 , 175);
+    Person p2("曹操", 45 , 180);
+    Person p3("孙权", 40 , 170);
+    Person p4("赵云", 25 , 190);
+    Person p5("张飞", 35 , 160);
+    Person p6("关羽", 35 , 200);
 
+    L.push_back(p1);
+    L.push_back(p2);
+    L.push_back(p3);
+    L.push_back(p4);
+    L.push_back(p5);
+    L.push_back(p6);
+    printList(L);
+
+    cout<<"排序："<<endl;
+    L.sort(ComparePersonAge);
+    for(list<Person>::const_iterator it = L.begin();it!=L.end();it++){
+        cout<< (*it).name <<","<<(*it).age<<","<<(*it).height<<endl;
+    }
+}
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869
 ```
 
 总结：
 
 - 对于自定义数据类型，必须要指定排序规则，否则编译器不知道如何进行排序
 - 高级排序只是在排序规则上再进行一次逻辑规则制定，并不复杂
+
+
 
 ### 3.8 set/ multiset 容器
 
@@ -3612,53 +3554,52 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <set>
-
-void printSet(set<int> & s)
-{
-	for (set<int>::iterator it = s.begin(); it != s.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+//set容器构造和赋值
+// set容器特点：
+// 1.所有元素插入时自动被排序
+// 2.不允许插入重复值
+void printSet(set<int> &s1) {
+    for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
 }
+void test01(){
+    set<int>s1;
+    //只有insert方式插入数据
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(40);
+    s1.insert(30);
+    s1.insert(40);
+    printSet(s1);
 
-//构造和赋值
-void test01()
-{
-	set<int> s1;
+    set<int>s2(s1);
+    printSet(s2);
 
-	s1.insert(10);
-	s1.insert(30);
-	s1.insert(20);
-	s1.insert(40);
-	printSet(s1);
-
-	//拷贝构造
-	set<int>s2(s1);
-	printSet(s2);
-
-	//赋值
-	set<int>s3;
-	s3 = s2;
-	printSet(s3);
+    set<int>s3;
+    s3 = s2;
+    printSet(s3);
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940
 ```
 
 总结：
 
 - set容器插入数据时用insert
 - set容器插入数据的数据会自动排序
+
+
 
 #### 3.8.3 set大小和交换
 
@@ -3675,79 +3616,53 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <set>
-
-void printSet(set<int> & s)
-{
-	for (set<int>::iterator it = s.begin(); it != s.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+//set容器构造和赋值
+// set容器特点：
+// 1.所有元素插入时自动被排序
+// 2.不允许插入重复值
+void printSet(set<int> &s1) {
+    for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
 }
+void test01(){
+    set<int>s1;
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(40);
+    s1.insert(30);
+    s1.insert(40);
+    printSet(s1);
 
-//大小
-void test01()
-{
+    if (s1.empty()){
+        cout<<"empty!"<<endl;
+    } else{
+        cout<<"size:"<<s1.size()<<endl;
+    }
 
-	set<int> s1;
-	
-	s1.insert(10);
-	s1.insert(30);
-	s1.insert(20);
-	s1.insert(40);
+    set<int>s2;
+    s2.insert(1);
+    s2.insert(2);
+    s2.insert(4);
+    s2.insert(3);
+    printSet(s2);
 
-	if (s1.empty())
-	{
-		cout << "s1为空" << endl;
-	}
-	else
-	{
-		cout << "s1不为空" << endl;
-		cout << "s1的大小为： " << s1.size() << endl;
-	}
-
+    s1.swap(s2);
+    printSet(s1);
+    printSet(s2);
 }
-
-//交换
-void test02()
-{
-	set<int> s1;
-
-	s1.insert(10);
-	s1.insert(30);
-	s1.insert(20);
-	s1.insert(40);
-
-	set<int> s2;
-
-	s2.insert(100);
-	s2.insert(300);
-	s2.insert(200);
-	s2.insert(400);
-
-	cout << "交换前" << endl;
-	printSet(s1);
-	printSet(s2);
-	cout << endl;
-
-	cout << "交换后" << endl;
-	s1.swap(s2);
-	printSet(s1);
-	printSet(s2);
-}
-
 int main() {
-
-	//test01();
-
-	test02();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172
 ```
 
 总结：
@@ -3755,6 +3670,8 @@ int main() {
 - 统计大小 — size
 - 判断是否为空 — empty
 - 交换容器 — swap
+
+
 
 #### 3.8.4 set插入和删除
 
@@ -3773,50 +3690,43 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+//set容器插入和删除
+#include <iostream>
+#include <string>
 #include <set>
-
-void printSet(set<int> & s)
-{
-	for (set<int>::iterator it = s.begin(); it != s.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+void printSet(set<int> &s1) {
+    for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
 }
+void test01(){
+    set<int>s1;
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(40);
+    s1.insert(30);
+    s1.insert(40);
+    printSet(s1);
 
-//插入和删除
-void test01()
-{
-	set<int> s1;
-	//插入
-	s1.insert(10);
-	s1.insert(30);
-	s1.insert(20);
-	s1.insert(40);
-	printSet(s1);
+    s1.erase(++s1.begin());
+    printSet(s1);
+    s1.erase(30);
+    printSet(s1);
 
-	//删除
-	s1.erase(s1.begin());
-	printSet(s1);
+//    s1.erase(s1.begin(),s1.end());
+    s1.clear();
+    printSet(s1);
 
-	s1.erase(30);
-	printSet(s1);
-
-	//清空
-	//s1.erase(s1.begin(), s1.end());
-	s1.clear();
-	printSet(s1);
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243
 ```
 
 总结：
@@ -3824,6 +3734,8 @@ int main() {
 - 插入 — insert
 - 删除 — erase
 - 清空 — clear
+
+
 
 #### 3.8.5 set查找和统计
 
@@ -3839,50 +3751,57 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+//set容器查找和统计
+#include <iostream>
+#include <string>
 #include <set>
-
-//查找和统计
-void test01()
-{
-	set<int> s1;
-	//插入
-	s1.insert(10);
-	s1.insert(30);
-	s1.insert(20);
-	s1.insert(40);
-	
-	//查找
-	set<int>::iterator pos = s1.find(30);
-
-	if (pos != s1.end())
-	{
-		cout << "找到了元素 ： " << *pos << endl;
-	}
-	else
-	{
-		cout << "未找到元素" << endl;
-	}
-
-	//统计
-	int num = s1.count(30);
-	cout << "num = " << num << endl;
+using namespace std;
+void printSet(set<int> &s1) {
+    for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
 }
-
+void test01(){
+    set<int>s1;
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(40);
+    s1.insert(30);
+    s1.insert(40);
+    printSet(s1);
+    set<int>::iterator pos = s1.find(20);
+    if(pos!=s1.end()){
+        cout<<"find!->"<<*pos<<endl;
+    } else{
+        cout<<"not find"<<endl;
+    }
+    int num = s1.count(10);
+    cout<<"num:"<<num<<endl;
+    multiset<int>ms1;
+    ms1.insert(10);
+    ms1.insert(20);
+    ms1.insert(40);
+    ms1.insert(30);
+    ms1.insert(40);
+    num = ms1.count(40);
+    cout<<"num:"<<num<<endl;
+}
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637
 ```
 
 总结：
 
 - 查找 — find （返回的是迭代器）
 - 统计 — count （对于set，结果为0或者1）
+
+
 
 #### 3.8.6 set和multiset区别
 
@@ -3899,54 +3818,62 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+//set和multiset的区别
+#include <iostream>
+#include <string>
 #include <set>
-
-//set和multiset区别
-void test01()
-{
-	set<int> s;
-	pair<set<int>::iterator, bool>  ret = s.insert(10);
-	if (ret.second) {
-		cout << "第一次插入成功!" << endl;
-	}
-	else {
-		cout << "第一次插入失败!" << endl;
-	}
-
-	ret = s.insert(10);
-	if (ret.second) {
-		cout << "第二次插入成功!" << endl;
-	}
-	else {
-		cout << "第二次插入失败!" << endl;
-	}
-    
-	//multiset
-	multiset<int> ms;
-	ms.insert(10);
-	ms.insert(10);
-
-	for (multiset<int>::iterator it = ms.begin(); it != ms.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+using namespace std;
+void printSet(set<int> &s1) {
+    for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
 }
+void printMultiSet(multiset<int> &s1) {
+    for (multiset<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
+}
+void test01(){
+    set<int>s1;
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(40);
+    s1.insert(30);
+    pair<set<int>::iterator,bool> ret = s1.insert(40);
+    if(ret.second){
+        cout<<"insert Successfully"<<endl;
+    } else{
+        cout<<"insert Failed"<<endl;
+    }
+    printSet(s1);
 
+
+    //允许重复插入 无重复检测
+    multiset<int>ms1;
+    ms1.insert(10);
+    ms1.insert(20);
+    ms1.insert(40);
+    ms1.insert(30);
+    ms1.insert(40);
+    printMultiSet(ms1);
+}
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041
 ```
 
 总结：
 
 - 如果不允许插入重复数据可以利用set
 - 如果需要插入重复数据利用multiset
+
+
 
 #### 3.8.7 pair对组创建
 
@@ -3962,32 +3889,32 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+//pair对组创建
+#include <iostream>
 #include <string>
+#include <set>
+using namespace std;
 
-//对组创建
-void test01()
-{
-	pair<string, int> p(string("Tom"), 20);
-	cout << "姓名： " <<  p.first << " 年龄： " << p.second << endl;
-
-	pair<string, int> p2 = make_pair("Jerry", 10);
-	cout << "姓名： " << p2.first << " 年龄： " << p2.second << endl;
+void test01(){
+    pair<string,int> p1("Tom",18);
+    cout<<p1.first<<","<<p1.second<<endl;
+    pair<string,int> p2 = make_pair("Jerry",30);
+    cout<<p2.first<<","<<p2.second<<endl;
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-1234567891011121314151617181920
 ```
 
 总结：
 
 两种方式都可以创建对组，记住一种即可
+
+
 
 #### 3.8.8 set容器排序
 
@@ -4002,53 +3929,48 @@ int main() {
 **示例一** set存放内置数据类型
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+//set容器排序
+#include <iostream>
+#include <string>
 #include <set>
-
-class MyCompare 
-{
+using namespace std;
+class MyCompare{
 public:
-	bool operator()(int v1, int v2) {
-		return v1 > v2;
-	}
+   bool operator()(int v1,int v2){
+       return v1>v2;
+   }
 };
-void test01() 
-{    
-	set<int> s1;
-	s1.insert(10);
-	s1.insert(40);
-	s1.insert(20);
-	s1.insert(30);
-	s1.insert(50);
-
-	//默认从小到大
-	for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
-
-	//指定排序规则
-	set<int,MyCompare> s2;
-	s2.insert(10);
-	s2.insert(40);
-	s2.insert(20);
-	s2.insert(30);
-	s2.insert(50);
-
-	for (set<int, MyCompare>::iterator it = s2.begin(); it != s2.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
+void printSet(set<int> &s1) {
+    for (set<int>::iterator it = s1.begin(); it != s1.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
 }
 
+void test01(){
+    set<int>s1;//默认从小到大排序
+    s1.insert(10);
+    s1.insert(20);
+    s1.insert(40);
+    s1.insert(30);
+    printSet(s1);
+    set<int,MyCompare>s2;//修改排序方式 从大到小
+    s2.insert(10);
+    s2.insert(20);
+    s2.insert(40);
+    s2.insert(30);
+    for (set<int,MyCompare>::iterator it = s2.begin(); it != s2.end(); it++) {
+        cout << (*it) << " ";
+    }
+    cout << endl;
+}
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546
 ```
 
 总结：利用仿函数可以指定set容器的排序规则
@@ -4056,65 +3978,61 @@ int main() {
 **示例二** set存放自定义数据类型
 
 ```cpp
-#include <set>
+//
+// Created by JSQ on 2021/7/10.
+//
+//set容器排序
+#include <iostream>
 #include <string>
-
-class Person
-{
+#include <set>
+using namespace std;
+class Person{
 public:
-	Person(string name, int age)
-	{
-		this->m_Name = name;
-		this->m_Age = age;
-	}
-
-	string m_Name;
-	int m_Age;
-
+    Person(string nam,int a){
+        this->age = a;
+        this->name = nam;
+    }
+    string name;
+    int age;
 };
-class comparePerson
-{
+class MyCompare{
 public:
-	bool operator()(const Person& p1, const Person &p2)
-	{
-		//按照年龄进行排序  降序
-		return p1.m_Age > p2.m_Age;
-	}
+    bool operator()(const Person &p1,const Person &p2){
+        return p1.age>p2.age;
+    }
 };
 
-void test01()
-{
-	set<Person, comparePerson> s;
+void test01(){
+    //自定义的数据类型 都会指定规则
+    set<Person,MyCompare>s1;
+    Person p1("刘备", 35 );
+    Person p2("曹操", 45 );
+    Person p3("孙权", 40 );
+    Person p4("赵云", 25 );
+    Person p5("张飞", 35 );
+    Person p6("关羽", 35 );
 
-	Person p1("刘备", 23);
-	Person p2("关羽", 27);
-	Person p3("张飞", 25);
-	Person p4("赵云", 21);
-
-	s.insert(p1);
-	s.insert(p2);
-	s.insert(p3);
-	s.insert(p4);
-
-	for (set<Person, comparePerson>::iterator it = s.begin(); it != s.end(); it++)
-	{
-		cout << "姓名： " << it->m_Name << " 年龄： " << it->m_Age << endl;
-	}
+    s1.insert(p1);
+    s1.insert(p2);
+    s1.insert(p3);
+    s1.insert(p4);
+    s1.insert(p5);
+    s1.insert(p6);
+    for(set<Person,MyCompare>::iterator it = s1.begin();it!=s1.end();it++){
+        cout<<(*it).name<<","<<(*it).age<<endl;
+    }
 }
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253
 ```
 
 总结：
 
 对于自定义数据类型，set必须指定排序规则才可以插入数据
+
+
 
 ### 3.9 map/ multimap容器
 
@@ -4159,45 +4077,47 @@ map和multimap**区别**：
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <map>
-
-void printMap(map<int,int>&m)
-{
-	for (map<int, int>::iterator it = m.begin(); it != m.end(); it++)
-	{
-		cout << "key = " << it->first << " value = " << it->second << endl;
-	}
-	cout << endl;
+using namespace std;
+//map容器构造和赋值
+void printMap(map<int,int>&m){
+    for(map<int,int>::iterator it = m.begin();it!=m.end();it++){
+        cout<<"key="<<(*it).first<<",value="<<(*it).second<<endl;
+    }
+    cout<<endl;
 }
+void test01(){
+    map<int,int>m;
+    m.insert(pair<int,int>(1,10));//匿名对组key=1 value=10
+    m.insert(pair<int,int>(2,30));
+    m.insert(pair<int,int>(5,15));
+    m.insert(pair<int,int>(10,40));
+    m.insert(pair<int,int>(3,70));
+    m.insert(pair<int,int>(3,75));//不可以重复插入key值，插入后并没有发生修改
+    printMap(m);
 
-void test01()
-{
-	map<int,int>m; //默认构造
-	m.insert(pair<int, int>(1, 10));
-	m.insert(pair<int, int>(2, 20));
-	m.insert(pair<int, int>(3, 30));
-	printMap(m);
-
-	map<int, int>m2(m); //拷贝构造
-	printMap(m2);
-
-	map<int, int>m3;
-	m3 = m2; //赋值
-	printMap(m3);
+    //拷贝构造
+    map<int,int>m2(m);
+    printMap(m2);
+    //赋值
+    map<int,int>m3;
+    m3 = m2;
+    printMap(m3);
 }
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435
 ```
 
 总结：map中所有元素都是成对出现，插入数据时候要使用对组
+
+
 
 #### 3.9.3 map大小和交换
 
@@ -4214,70 +4134,49 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <map>
-
-void printMap(map<int,int>&m)
-{
-	for (map<int, int>::iterator it = m.begin(); it != m.end(); it++)
-	{
-		cout << "key = " << it->first << " value = " << it->second << endl;
-	}
-	cout << endl;
+using namespace std;
+//map大小和交换
+void printMap(map<int,int>&m){
+    for(map<int,int>::iterator it = m.begin();it!=m.end();it++){
+        cout<<"key="<<(*it).first<<",value="<<(*it).second<<endl;
+    }
+    cout<<endl;
 }
+void test01(){
+    map<int,int>m;
+    m.insert(pair<int,int>(1,10));//匿名对组key=1 value=10
+    m.insert(pair<int,int>(2,30));
+    m.insert(pair<int,int>(5,15));
+    m.insert(pair<int,int>(10,40));
+    m.insert(pair<int,int>(3,70));
+    m.insert(pair<int,int>(3,75));//不可以重复插入key值，插入后并没有发生修改
+    printMap(m);
 
-void test01()
-{
-	map<int, int>m;
-	m.insert(pair<int, int>(1, 10));
-	m.insert(pair<int, int>(2, 20));
-	m.insert(pair<int, int>(3, 30));
-
-	if (m.empty())
-	{
-		cout << "m为空" << endl;
-	}
-	else
-	{
-		cout << "m不为空" << endl;
-		cout << "m的大小为： " << m.size() << endl;
-	}
+    if(m.empty()){
+        cout<<"Empty"<<endl;
+    } else{
+        cout<<"Size="<<m.size()<<endl;
+    }
+    map<int,int>m2;
+    m2.insert(pair<int,int>(2,30));
+    m2.insert(pair<int,int>(5,15));
+    m2.insert(pair<int,int>(10,40));
+    m2.insert(pair<int,int>(3,75));
+    printMap(m2);
+    m.swap(m2);
+    printMap(m);
+    printMap(m2);
 }
-
-
-//交换
-void test02()
-{
-	map<int, int>m;
-	m.insert(pair<int, int>(1, 10));
-	m.insert(pair<int, int>(2, 20));
-	m.insert(pair<int, int>(3, 30));
-
-	map<int, int>m2;
-	m2.insert(pair<int, int>(4, 100));
-	m2.insert(pair<int, int>(5, 200));
-	m2.insert(pair<int, int>(6, 300));
-
-	cout << "交换前" << endl;
-	printMap(m);
-	printMap(m2);
-
-	cout << "交换后" << endl;
-	m.swap(m2);
-	printMap(m);
-	printMap(m2);
+int main(){
+    test01();
+    return 0;
 }
-
-int main() {
-
-	test01();
-
-	test02();
-
-	system("pause");
-
-	return 0;
-}
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263
 ```
 
 总结：
@@ -4285,6 +4184,8 @@ int main() {
 - 统计大小 — size
 - 判断是否为空 — empty
 - 交换容器 — swap
+
+
 
 #### 3.9.4 map插入和删除
 
@@ -4303,53 +4204,52 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <map>
-
-void printMap(map<int,int>&m)
-{
-	for (map<int, int>::iterator it = m.begin(); it != m.end(); it++)
-	{
-		cout << "key = " << it->first << " value = " << it->second << endl;
-	}
-	cout << endl;
+using namespace std;
+//map大小和交换
+void printMap(map<int,int>&m){
+    for(map<int,int>::iterator it = m.begin();it!=m.end();it++){
+        cout<<"key="<<(*it).first<<",value="<<(*it).second<<endl;
+    }
+    cout<<endl;
 }
-
-void test01()
-{
-	//插入
-	map<int, int> m;
-	//第一种插入方式
-	m.insert(pair<int, int>(1, 10));
-	//第二种插入方式
-	m.insert(make_pair(2, 20));
-	//第三种插入方式
-	m.insert(map<int, int>::value_type(3, 30));
-	//第四种插入方式
-	m[4] = 40; 
-	printMap(m);
-
-	//删除
-	m.erase(m.begin());
-	printMap(m);
-
-	m.erase(3);
-	printMap(m);
-
-	//清空
-	m.erase(m.begin(),m.end());
-	m.clear();
-	printMap(m);
+void test01(){
+    map<int,int>m;
+    m.insert(pair<int,int>(1,10));//匿名对组key=1 value=10
+    m.insert(pair<int,int>(2,30));
+    m.insert(pair<int,int>(5,15));
+    m.insert(pair<int,int>(10,40));
+    m.insert(pair<int,int>(3,70));
+    printMap(m);
+    //第二种插入方式
+    m.insert(make_pair(7,10));
+    //第三种
+    m.insert(map<int,int>::value_type(8,15));
+    //第四种
+    //不推荐-因为这种方式如果当前key在map中不存在会创建一个为0的key，value；有可能会产生错误的内容
+    //可以利用key访问到value
+    m[4] = 30;
+    printMap(m);
+    //删除
+    m.erase(m.begin());
+    printMap(m);
+    m.erase(10);//按照key删除
+    printMap(m);
+    m.erase(++m.begin(),--m.end());//清空
+    printMap(m);
+    //清空
+    m.clear();
+    printMap(m);
 }
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546
 ```
 
 总结：
@@ -4359,6 +4259,8 @@ int main() {
 - 插入 — insert
 - 删除 — erase
 - 清空 — clear
+
+
 
 #### 3.9.5 map查找和统计
 
@@ -4374,48 +4276,73 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
+#include <string>
 #include <map>
-
-//查找和统计
-void test01()
-{
-	map<int, int>m; 
-	m.insert(pair<int, int>(1, 10));
-	m.insert(pair<int, int>(2, 20));
-	m.insert(pair<int, int>(3, 30));
-
-	//查找
-	map<int, int>::iterator pos = m.find(3);
-
-	if (pos != m.end())
-	{
-		cout << "找到了元素 key = " << (*pos).first << " value = " << (*pos).second << endl;
-	}
-	else
-	{
-		cout << "未找到元素" << endl;
-	}
-
-	//统计
-	int num = m.count(3);
-	cout << "num = " << num << endl;
+using namespace std;
+//map查找和统计
+void printMap(map<int,int>&m){
+    for(map<int,int>::iterator it = m.begin();it!=m.end();it++){
+        cout<<"key="<<(*it).first<<",value="<<(*it).second<<endl;
+    }
+    cout<<endl;
 }
+void test01(){
+    map<int,int>m;
+    m.insert(pair<int,int>(1,10));
+    m.insert(pair<int,int>(2,30));
+    m.insert(pair<int,int>(5,15));
+    m.insert(pair<int,int>(6,40));
+    m.insert(pair<int,int>(3,70));
+    m.insert(make_pair(4,20));
+    printMap(m);
+    map<int,int>::iterator  pos = m.find(7);
+    if (pos!=m.end()){
+        cout<<"find key:"<<(*pos).first<<"value="<<(*pos).second<<endl;
+    } else{
+        cout<<"not found!"<<endl;
+    }
+    //map中 只有0，1
+    //map中不允许插入重复key元素
+    int num = m.count(3);
+    cout<<"num="<<num<<endl;
 
-int main() {
+    multimap<int,int>mm;
+    mm.insert(make_pair(1,20));
+    mm.insert(make_pair(1,30));
+    mm.insert(make_pair(2,30));
+    mm.insert(make_pair(2,40));
+    for(multimap<int,int>::iterator it = mm.begin();it!=mm.end();it++){
+        cout<<"key="<<(*it).first<<",value="<<(*it).second<<endl;
+    }
+    cout<<endl;
 
-	test01();
-
-	system("pause");
-
-	return 0;
+    multimap<int,int>::iterator  mpos = mm.find(1);
+    if (mpos!=m.end()){
+        cout<<"find key:"<<(*mpos).first<<",value="<<(*mpos).second<<endl;
+    } else{
+        cout<<"not found!"<<endl;
+    }
+    //map中 只有0，1
+    //map中不允许插入重复key元素
+    int mnum = mm.count(2);
+    cout<<"num="<<mnum<<endl;
 }
-1234567891011121314151617181920212223242526272829303132333435
+int main(){
+    test01();
+    return 0;
+}
 ```
 
 总结：
 
 - 查找 — find （返回的是迭代器）
 - 统计 — count （对于map，结果为0或者1）
+
+
 
 #### 3.9.6 map容器排序
 
@@ -4430,40 +4357,77 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/10.
+//
+#include <iostream>
 #include <map>
-
-class MyCompare {
+#include <string>
+using namespace std;
+//map 排序
+class Person{
 public:
-	bool operator()(int v1, int v2) {
-		return v1 > v2;
-	}
+    Person(string n,int a){
+        this->name = n;
+        this->age = a;
+    }
+    string name;
+    int age;
+};
+class MyCompare{
+public:
+    bool operator()(int v1,int v2){
+        return v1>v2;
+    }
+    bool operator()(const Person &p1,const Person &p2){
+        return p1.age>p2.age;
+    }
 };
 
-void test01() 
-{
-	//默认从小到大排序
-	//利用仿函数实现从大到小排序
-	map<int, int, MyCompare> m;
+void test01(){
+    map<int,int,MyCompare>m;
+    m.insert(make_pair(1,10));
+    m.insert(make_pair(2,20));
+    m.insert(make_pair(3,30));
+    m.insert(make_pair(4,40));
+    for(map<int,int,MyCompare>::iterator it = m.begin();it!=m.end();it++){
+        cout<<(*it).first<<","<<(*it).second<<endl;
+    }
+    cout<<endl;
 
-	m.insert(make_pair(1, 10));
-	m.insert(make_pair(2, 20));
-	m.insert(make_pair(3, 30));
-	m.insert(make_pair(4, 40));
-	m.insert(make_pair(5, 50));
+    map<int,Person,MyCompare>mp;
+    Person p1("刘备", 35 );
+    Person p2("曹操", 45 );
+    Person p3("孙权", 40 );
+    Person p4("赵云", 25 );
+    Person p5("张飞", 35 );
+    Person p6("关羽", 35 );
+    mp.insert(make_pair(1,p1));
+    mp.insert(make_pair(2,p2));
+    mp.insert(make_pair(3,p3));
+    mp.insert(make_pair(4,p4));
+    mp.insert(make_pair(5,p5));
+    for(map<int,Person,MyCompare>::iterator it = mp.begin();it!=mp.end();it++){
+        cout<<(*it).first<<","<<(*it).second.name<<":"<<(*it).second.age<<endl;
+    }
+    cout<<endl;
 
-	for (map<int, int, MyCompare>::iterator it = m.begin(); it != m.end(); it++) {
-		cout << "key:" << it->first << " value:" << it->second << endl;
-	}
+    map<Person,int,MyCompare>mp2;
+    mp2.insert(make_pair(p1,1));
+    mp2.insert(make_pair(p2,2));
+    mp2.insert(make_pair(p3,3));
+    mp2.insert(make_pair(p4,4));
+    mp2.insert(make_pair(p5,5));
+    for(map<Person,int,MyCompare>::iterator it = mp2.begin();it!=mp2.end();it++){
+        cout<<(*it).second<<","<<(*it).first.name<<":"<<(*it).first.age<<endl;
+    }
+    cout<<endl;
+
 }
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main(){
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233
 ```
 
 总结：
