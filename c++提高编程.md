@@ -2822,6 +2822,8 @@ int main() {
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210525131233741.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0F1Z2Vuc3Rlcm5fUVhM,size_16,color_FFFFFF,t_70#pic_center)
 
+
+
 #### 3.5.2 stack 常用接口
 
 功能描述：栈容器常用的对外接口
@@ -2849,38 +2851,36 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/9.
+//
+#include <iostream>
+#include <string>
 #include <stack>
-
-//栈容器常用接口
-void test01()
-{
-	//创建栈容器 栈容器必须符合先进后出
-	stack<int> s;
-
-	//向栈中添加元素，叫做 压栈 入栈
-	s.push(10);
-	s.push(20);
-	s.push(30);
-
-	while (!s.empty()) {
-		//输出栈顶元素
-		cout << "栈顶元素为： " << s.top() << endl;
-		//弹出栈顶元素
-		s.pop();
-	}
-	cout << "栈的大小为：" << s.size() << endl;
-
+using namespace std;
+//栈stack容器
+void test01(){
+    //FILO
+    stack<int>s;
+    //入栈
+    s.push(10);
+    s.push(20);
+    s.push(30);
+    s.push(40);
+    s.push(50);
+    cout<<s.size()<<endl;
+    //只要栈不为空，查看栈顶，并执行出栈操作
+    while (!s.empty()){
+        cout<<s.top()<<endl;
+        s.pop();
+    }
+    cout<<s.size();
+}
+int main(){
+    test01();
+    return 0;
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
-}
-12345678910111213141516171819202122232425262728293031
 ```
 
 总结：
@@ -2890,6 +2890,8 @@ int main() {
 - 返回栈顶 — top
 - 判断栈是否为空 — empty
 - 返回栈大小 — size
+
+
 
 ### 3.6 queue 容器
 
