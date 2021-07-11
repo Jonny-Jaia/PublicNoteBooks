@@ -4649,103 +4649,81 @@ int main() {
 **示例：**
 
 ```cpp
+#include <iostream>
+using namespace std;
 #include <vector>
 #include <algorithm>
-
-//1.一元谓词
-struct GreaterFive{
-	bool operator()(int val) {
-		return val > 5;
-	}
+//一元谓词
+//仿函数 返回值类型是bool数据类型，成为谓词
+class FindFive{
+public:
+    bool operator()(int val){
+        return val>5;
+    }
 };
-
-void test01() {
-
-	vector<int> v;
-	for (int i = 0; i < 10; i++)
-	{
-		v.push_back(i);
-	}
-
-	vector<int>::iterator it = find_if(v.begin(), v.end(), GreaterFive());
-	if (it == v.end()) {
-		cout << "没找到!" << endl;
-	}
-	else {
-		cout << "找到:" << *it << endl;
-	}
-
+void test01(){
+    vector<int>v;
+    for(int i = 0;i<10;i++){
+        v.push_back(i);
+    }
+    //查找容器中 有没有大于5的数字
+    vector<int>::iterator  it = find_if(v.begin(), v.end(),FindFive());//FindFive()匿名函数对象
+    if(it==v.end()){
+        cout<<"not Found!"<<endl;
+    } else{
+        cout<<"Found!"<<*it<<endl;
+    }
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536
 ```
 
 总结：参数只有一个的谓词，称为一元谓词
+
+
 
 #### 4.2.3 二元谓词
 
 **示例：**
 
 ```cpp
+##include <iostream>
+using namespace std;
 #include <vector>
 #include <algorithm>
-//二元谓词
-class MyCompare
-{
+//二元谓词-两个参数
+//仿函数 返回值类型是bool数据类型，成为谓词
+class MyCompare{
 public:
-	bool operator()(int num1, int num2)
-	{
-		return num1 > num2;
-	}
+    bool operator()(int v1,int v2){
+        return v1>v2;
+    }
 };
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
 
-void test01()
-{
-	vector<int> v;
-	v.push_back(10);
-	v.push_back(40);
-	v.push_back(20);
-	v.push_back(30);
-	v.push_back(50);
-
-	//默认从小到大
-	sort(v.begin(), v.end());
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
-	cout << "----------------------------" << endl;
-
-	//使用函数对象改变算法策略，排序从大到小
-	sort(v.begin(), v.end(), MyCompare());
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
+    sort(v.begin(), v.end(),MyCompare());//匿名函数对象-降序排列
+    for(vector<int>::iterator it = v.begin();it!=v.end();it++){
+        cout << *it<<" ";
+    }
+    cout<<endl;
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647
 ```
 
 总结：参数只有两个的谓词，称为二元谓词
+
+
 
 ### 4.3 内建函数对象
 
