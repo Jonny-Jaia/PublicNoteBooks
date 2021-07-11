@@ -4763,34 +4763,32 @@ int main() {
 **示例：**
 
 ```cpp
+#include <iostream>
+#include <string>
 #include <functional>
-//negate
-void test01()
-{
-	negate<int> n;
-	cout << n(50) << endl;
+using namespace std;
+//内建函数对象 - 算术仿函数
+
+void test01(){
+    //negate 一元仿函数 取反
+    negate<int>n;
+    cout<<n(50)<<endl;
+    //plus 二元仿函数 加法
+    plus<int>p;
+    cout<<p(10,30)<<endl;
 }
 
-//plus
-void test02()
-{
-	plus<int> p;
-	cout << p(10, 20) << endl;
-}
 
+using namespace std;
 int main() {
-
-	test01();
-	test02();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324
 ```
 
 总结：使用内建函数对象时，需要引入头文件 `#include <functional>`
+
+
 
 #### 4.3.3 关系仿函数
 
@@ -4810,56 +4808,51 @@ int main() {
 **示例：**
 
 ```cpp
-#include <functional>
+//
+// Created by JSQ on 2021/7/11.
+//
 #include <vector>
+#include <iostream>
+#include <string>
+#include <functional>
 #include <algorithm>
-
-class MyCompare
-{
+using namespace std;
+//内建函数对象 - 关系仿函数
+class MyCMP{
 public:
-	bool operator()(int v1,int v2)
-	{
-		return v1 > v2;
-	}
+    bool operator()(int v1,int v2){
+        return v1>v2;
+    }
 };
-void test01()
-{
-	vector<int> v;
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
+    //降序
+//    sort(v.begin(), v.end(),MyCMP());
+    //内建函数提供
+    sort(v.begin(), v.end(),greater<int>());
+    for(vector<int>::iterator it = v.begin();it!=v.end();it++){
+        cout << *it<<" ";
+    }
+    cout<<endl;
 
-	v.push_back(10);
-	v.push_back(30);
-	v.push_back(50);
-	v.push_back(40);
-	v.push_back(20);
-
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
-
-	//自己实现仿函数
-	//sort(v.begin(), v.end(), MyCompare());
-	//STL内建仿函数  大于仿函数
-	sort(v.begin(), v.end(), greater<int>());
-
-	for (vector<int>::iterator it = v.begin(); it != v.end(); it++) {
-		cout << *it << " ";
-	}
-	cout << endl;
 }
 
+
+using namespace std;
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546
 ```
 
 总结：关系仿函数中最常用的就是greater<>大于
+
+
 
 #### 4.3.4 逻辑仿函数
 
