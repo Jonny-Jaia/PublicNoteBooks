@@ -4869,46 +4869,51 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/11.
+//
 #include <vector>
+#include <iostream>
+#include <string>
 #include <functional>
 #include <algorithm>
-void test01()
-{
-	vector<bool> v;
-	v.push_back(true);
-	v.push_back(false);
-	v.push_back(true);
-	v.push_back(false);
+using namespace std;
+//内建函数对象 - 逻辑仿函数
+void test01(){
+    vector<bool>v;
+    v.push_back(1);
+    v.push_back(0);
+    v.push_back(1);
+    v.push_back(0);
+    v.push_back(1);
 
-	for (vector<bool>::iterator it = v.begin();it!= v.end();it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
+    for(vector<bool>::iterator it = v.begin();it!=v.end();it++){
+        cout << *it<<" ";
+    }
+    cout<<endl;
+    vector<bool>v2;
+    //将v2扩充和v一样大小--必须的，否则无法成功搬移
+    v2.resize(v.size());
+    //对v进行逻辑非并将内容搬移到v2中
+    transform(v.begin(), v.end(),v2.begin(),logical_not<bool>());
+    for(vector<bool>::iterator it = v2.begin();it!=v2.end();it++){
+        cout << *it<<" ";
+    }
+    cout<<endl;
 
-	//逻辑非  将v容器搬运到v2中，并执行逻辑非运算
-	vector<bool> v2;
-	v2.resize(v.size());
-	transform(v.begin(), v.end(),  v2.begin(), logical_not<bool>());
-	for (vector<bool>::iterator it = v2.begin(); it != v2.end(); it++)
-	{
-		cout << *it << " ";
-	}
-	cout << endl;
 }
 
+
+using namespace std;
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536
 ```
 
 总结：逻辑仿函数实际应用较少，了解即可
+
+
 
 ## 5 STL- 常用算法
 
