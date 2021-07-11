@@ -4956,53 +4956,43 @@ int main() {
 **示例：**
 
 ```cpp
+#include <iostream>
 #include <algorithm>
+#include <string>
 #include <vector>
-
+//常用遍历算法 for_each
+using namespace std;
 //普通函数
-void print01(int val) 
-{
-	cout << val << " ";
+void print01(int val){
+    cout<<val<<" ";
 }
-//函数对象
-class print02 
-{
- public:
-	void operator()(int val) 
-	{
-		cout << val << " ";
-	}
+//仿函数
+class MyPrint{
+public:
+    void operator()(int val){
+        cout<<val<<" ";
+    }
 };
-
-//for_each算法基本用法
-void test01() {
-
-	vector<int> v;
-	for (int i = 0; i < 10; i++) 
-	{
-		v.push_back(i);
-	}
-
-	//遍历算法
-	for_each(v.begin(), v.end(), print01);
-	cout << endl;
-
-	for_each(v.begin(), v.end(), print02());
-	cout << endl;
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
+    for_each(v.begin(),v.end(), print01);
+    cout<<endl;
+    for_each(v.begin(),v.end(), MyPrint());
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243
 ```
 
 总结：**for_each在实际开发中是最常用遍历算法，需要熟练掌握**
+
+
 
 #### 5.1.2 transform
 
@@ -5025,59 +5015,50 @@ int main() {
 **示例：**
 
 ```cpp
-#include<vector>
-#include<algorithm>
-
-//常用遍历算法  搬运 transform
-
-class TransForm
-{
+//
+// Created by JSQ on 2021/7/11.
+//
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+//常用遍历算法 transform
+using namespace std;
+class Transform{
 public:
-	int operator()(int val)
-	{
-		return val;
-	}
-
+    int operator()(int val){
+        return val+100;
+    }
 };
-
-class MyPrint
-{
+class MyPrint{
 public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
+    void operator()(int val){
+        cout<<val<<" ";
+    }
 };
-
-void test01()
-{
-	vector<int>v;
-	for (int i = 0; i < 10; i++)
-	{
-		v.push_back(i);
-	}
-
-	vector<int>vTarget; //目标容器
-
-	vTarget.resize(v.size()); // 目标容器需要提前开辟空间
-
-	transform(v.begin(), v.end(), vTarget.begin(), TransForm());
-
-	for_each(vTarget.begin(), vTarget.end(), MyPrint());
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
+    vector<int>v2;//目标容器
+    //必须要提前开辟空间
+    v2.resize(v.size());
+    transform(v.begin(),v.end(),v2.begin(),Transform());
+    for_each(v2.begin(),v2.end(), MyPrint());
 }
-
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849
+
 ```
 
 **总结：** 搬运的目标容器必须要提前开辟空间，否则无法正常搬运
+
+
 
 ### 5.2 常用查找算法
 
@@ -5115,78 +5096,76 @@ int main() {
 **示例：**
 
 ```cpp
+#include <iostream>
 #include <algorithm>
 #include <vector>
 #include <string>
-void test01() {
-
-	vector<int> v;
-	for (int i = 0; i < 10; i++) {
-		v.push_back(i + 1);
-	}
-	//查找容器中是否有 5 这个元素
-	vector<int>::iterator it = find(v.begin(), v.end(), 5);
-	if (it == v.end()) 
-	{
-		cout << "没有找到!" << endl;
-	}
-	else 
-	{
-		cout << "找到:" << *it << endl;
-	}
+using namespace std;
+//查找元素find
+//查找内置数据
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
+    vector<int>::iterator pos = find(v.begin(),v.end(),5);
+    if(pos==v.end()){
+        cout<<"not Found"<<endl;
+    }else{
+        cout<<"Found!"<<"->"<<*pos<<endl;
+    }
 }
-
-class Person {
+class Person{
 public:
-	Person(string name, int age) 
-	{
-		this->m_Name = name;
-		this->m_Age = age;
-	}
-	//重载==
-	bool operator==(const Person& p) 
-	{
-		if (this->m_Name == p.m_Name && this->m_Age == p.m_Age) 
-		{
-			return true;
-		}
-		return false;
-	}
-
-public:
-	string m_Name;
-	int m_Age;
+    Person(string n,int a){
+        this->name =n;
+        this->age = a;
+    }
+    //重载 == 让底层find知道如何对比Person数据类型
+    bool operator==(const Person &p){
+        if(this->name == p.name && this->age == p.age){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    string name;
+    int age;
 };
+//查找自定义数据类型
+void test02(){
+    vector<Person>v;
+    Person p1("刘备", 35 );
+    Person p2("曹操", 45 );
+    Person p3("孙权", 40 );
+    Person p4("赵云", 25 );
+    Person p5("张飞", 35 );
+    Person p6("关羽", 35 );
 
-void test02() {
-
-	vector<Person> v;
-
-	//创建数据
-	Person p1("aaa", 10);
-	Person p2("bbb", 20);
-	Person p3("ccc", 30);
-	Person p4("ddd", 40);
-
-	v.push_back(p1);
-	v.push_back(p2);
-	v.push_back(p3);
-	v.push_back(p4);
-
-	vector<Person>::iterator it = find(v.begin(), v.end(), p2);
-	if (it == v.end()) 
-	{
-		cout << "没有找到!" << endl;
-	}
-	else 
-	{
-		cout << "找到姓名:" << it->m_Name << " 年龄: " << it->m_Age << endl;
-	}
+    v.push_back(p1);
+    v.push_back(p2);
+    v.push_back(p3);
+    v.push_back(p4);
+    v.push_back(p5);
+    v.push_back(p6);
+    vector<Person>::iterator pos = find(v.begin(),v.end(),p6);
+    if(pos==v.end()){
+        cout<<"not Found"<<endl;
+    }else{
+        cout<<"Found!"<<"->"<<(*pos).name<<","<<(*pos).age<<endl;
+    }
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768
+int main() {
+    test02();
+    return 0;
+}
 ```
 
 总结： 利用find可以在容器中找指定的元素，返回值是**迭代器**
+
+
 
 #### 5.2.2 find_if
 
