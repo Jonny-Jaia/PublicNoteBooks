@@ -1,3 +1,5 @@
+
+
 # c++提高编程
 
 ```c++
@@ -5633,45 +5635,44 @@ int main() {
 **示例：**
 
 ```cpp
+#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <string>
+#include <functional>
+//常用排序算法sort
+using namespace std;
+void MyPrint(int val){
+    cout<<val<<" ";
+}
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(3);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(6);
+    //sort默认升序
+    sort(v.begin(),v.end());
+    for_each(v.begin(), v.end(),MyPrint);
+    cout<<endl;
+    //改为降序
+    sort(v.begin(), v.end(),greater<int>());
+    for_each(v.begin(), v.end(),MyPrint);
+    cout<<endl;
+}
 
-void myPrint(int val)
+int main()
 {
-	cout << val << " ";
+    test01();
+    return 0;
 }
-
-void test01() {
-	vector<int> v;
-	v.push_back(10);
-	v.push_back(30);
-	v.push_back(50);
-	v.push_back(20);
-	v.push_back(40);
-
-	//sort默认从小到大排序
-	sort(v.begin(), v.end());
-	for_each(v.begin(), v.end(), myPrint);
-	cout << endl;
-
-	//从大到小排序
-	sort(v.begin(), v.end(), greater<int>());
-	for_each(v.begin(), v.end(), myPrint);
-	cout << endl;
-}
-
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
-}
-1234567891011121314151617181920212223242526272829303132333435
 ```
 
 **总结**：sort属于开发中最常用的算法之一，需熟练掌握
+
+
 
 #### 5.3.2 random_shuffle
 
@@ -5694,48 +5695,42 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <string>
+#include <functional>
 #include <ctime>
-
-class myPrint
-{
-public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
-};
-
-void test01()
-{
-	srand((unsigned int)time(NULL));
-	vector<int> v;
-	for(int i = 0 ; i < 10;i++)
-	{
-		v.push_back(i);
-	}
-	for_each(v.begin(), v.end(), myPrint());
-	cout << endl;
-
-	//打乱顺序
-	random_shuffle(v.begin(), v.end());
-	for_each(v.begin(), v.end(), myPrint());
-	cout << endl;
+//常用排序算法random_shuffle
+using namespace std;
+void MyPrint(int val){
+    cout<<val<<" ";
+}
+void test01(){
+    vector<int>v;
+    for (int i = 0; i < 10; ++i) {
+        v.push_back(i);
+    }
+    //打乱
+    random_shuffle(v.begin(), v.end());
+    for_each(v.begin(), v.end(),MyPrint);
+    cout<<endl;
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main()
+{
+    srand((unsigned int)time(NULL));
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435363738
 ```
 
 **总结**：random_shuffle洗牌算法比较实用，使用时记得加随机数种子
+
+
 
 #### 5.3.3 merge
 
@@ -5762,49 +5757,55 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
 #include <algorithm>
 #include <vector>
-
-class myPrint
-{
-public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
-};
-
-void test01()
-{
-	vector<int> v1;
-	vector<int> v2;
-	for (int i = 0; i < 10 ; i++) 
-    {
-		v1.push_back(i);
-		v2.push_back(i + 1);
-	}
-
-	vector<int> vtarget;
-	//目标容器需要提前开辟空间
-	vtarget.resize(v1.size() + v2.size());
-	//合并  需要两个有序序列
-	merge(v1.begin(), v1.end(), v2.begin(), v2.end(), vtarget.begin());
-	for_each(vtarget.begin(), vtarget.end(), myPrint());
-	cout << endl;
+#include <string>
+#include <functional>
+#include <ctime>
+//有序序列合并成有序序列merge
+using namespace std;
+void MyPrint(int val){
+    cout<<val<<" ";
+}
+void test01(){
+    vector<int>v;
+    for (int i = 0; i < 20; ++i) {
+        if(i%2){
+            v.push_back(i);
+        }
+    }
+    vector<int>v2;
+    for (int i = 0; i < 20; ++i) {
+        if(i%2==0){
+            v2.push_back(i);
+        }
+    }
+    for_each(v.begin(), v.end(),MyPrint);
+    cout<<endl;
+    for_each(v2.begin(), v2.end(),MyPrint);
+    cout<<endl;
+    vector<int>target;
+    target.resize(v.size()+v2.size());
+    merge(v.begin(), v.end(),v2.begin(), v2.end(),target.begin());
+    for_each(target.begin(), target.end(),MyPrint);
+    cout<<endl;
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main()
+{
+    srand((unsigned int)time(NULL));
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839
 ```
 
 **总结**：merge合并的两个容器必须的有序序列
+
+
 
 #### 5.3.4 reverse
 
@@ -5827,50 +5828,43 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <string>
+#include <functional>
+//元素反转reverse
+using namespace std;
+void MyPrint(int val){
+    cout<<val<<" ";
+}
+void test01(){
+    vector<int>v;
+    for (int i = 0; i < 10; ++i) {
+        v.push_back(i);
+    }
 
-class myPrint
-{
-public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
-};
+    for_each(v.begin(), v.end(),MyPrint);
+    cout<<endl;
+    reverse(v.begin(), v.end());
+    for_each(v.begin(), v.end(),MyPrint);
+    cout<<endl;
 
-void test01()
-{
-	vector<int> v;
-	v.push_back(10);
-	v.push_back(30);
-	v.push_back(50);
-	v.push_back(20);
-	v.push_back(40);
-
-	cout << "反转前： " << endl;
-	for_each(v.begin(), v.end(), myPrint());
-	cout << endl;
-
-	cout << "反转后： " << endl;
-
-	reverse(v.begin(), v.end());
-	for_each(v.begin(), v.end(), myPrint());
-	cout << endl;
 }
 
-int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+int main()
+{
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940
 ```
 
 **总结**：reverse反转区间内元素，面试题可能涉及到
+
+
 
 ### 5.4 常用拷贝和替换算法
 
