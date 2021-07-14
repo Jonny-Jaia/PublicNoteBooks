@@ -6082,53 +6082,54 @@ int main() {
 **示例：**
 
 ```cpp
-#include <algorithm>
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
+using namespace std;
 #include <vector>
-
-class myPrint
-{
+#include <algorithm>
+//swap交换两个容器
+class myprint{
 public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
+    void operator()(int val){
+        cout<<val<<" ";
+    }
 };
+class Greater2{
+public:
+    bool operator()(int val){
+        return val > 2;
+    }
+};
+void test01(){
+    vector<int>v1;
+    vector<int>v2;
 
-void test01()
-{
-	vector<int> v1;
-	vector<int> v2;
-	for (int i = 0; i < 10; i++) {
-		v1.push_back(i);
-		v2.push_back(i+100);
-	}
-
-	cout << "交换前： " << endl;
-	for_each(v1.begin(), v1.end(), myPrint());
-	cout << endl;
-	for_each(v2.begin(), v2.end(), myPrint());
-	cout << endl;
-
-	cout << "交换后： " << endl;
-	swap(v1, v2);
-	for_each(v1.begin(), v1.end(), myPrint());
-	cout << endl;
-	for_each(v2.begin(), v2.end(), myPrint());
-	cout << endl;
+    for (int i = 0; i < 10; ++i) {
+        v1.push_back(i);
+        v2.push_back(i*10);
+    }
+    for_each(v1.begin(), v1.end(), myprint());
+    cout<<endl;
+    for_each(v2.begin(), v2.end(), myprint());
+    cout<<endl;
+    swap(v1, v2);
+    for_each(v1.begin(), v1.end(), myprint());
+    cout<<endl;
+    for_each(v2.begin(), v2.end(), myprint());
+    cout<<endl;
 }
 
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243
 ```
 
 总结：**swap交换容器时，注意交换的容器要同种类型**
+
+
 
 ### 5.5 常用算术生成算法
 
