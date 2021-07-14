@@ -5412,85 +5412,87 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
 #include <algorithm>
 #include <vector>
+#include <string>
+using namespace std;
+//查找元素find_if
+//查找内置数据
+class GreaterFour{
+public:
+    bool operator()(int val){
+        return val>4;
+    }
+};
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
+    v.push_back(4);
+    v.push_back(4);
+    int num = count(v.begin(),v.end(),4);
+    cout<<num<<endl;
 
-//内置数据类型
-void test01()
-{
-	vector<int> v;
-	v.push_back(1);
-	v.push_back(2);
-	v.push_back(4);
-	v.push_back(5);
-	v.push_back(3);
-	v.push_back(4);
-	v.push_back(4);
-
-	int num = count(v.begin(), v.end(), 4);
-
-	cout << "4的个数为： " << num << endl;
 }
 
-//自定义数据类型
-class Person
-{
+class Person{
 public:
-	Person(string name, int age)
-	{
-		this->m_Name = name;
-		this->m_Age = age;
-	}
-	bool operator==(const Person & p)
-	{
-		if (this->m_Age == p.m_Age)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	string m_Name;
-	int m_Age;
+    Person(string n,int a){
+        this->name =n;
+        this->age = a;
+    }
+    //重载 == 让底层find知道如何对比Person数据类型
+    bool operator==(const Person &p){
+        if(this->age == p.age){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    string name;
+    int age;
 };
-
-void test02()
-{
-	vector<Person> v;
-
-	Person p1("刘备", 35);
-	Person p2("关羽", 35);
-	Person p3("张飞", 35);
-	Person p4("赵云", 30);
-	Person p5("曹操", 25);
-
-	v.push_back(p1);
-	v.push_back(p2);
-	v.push_back(p3);
-	v.push_back(p4);
-	v.push_back(p5);
-    
-    Person p("诸葛亮",35);
-
-	int num = count(v.begin(), v.end(), p);
-	cout << "num = " << num << endl;
+class Less30{
+public:
+    bool operator()( Person &p){
+        return p.age<30;
+    }
+};
+//查找自定义数据类型
+void test02(){
+    vector<Person>v;
+    Person p1("刘备", 35 );
+    Person p2("曹操", 45 );
+    Person p3("孙权", 40 );
+    Person p4("赵云", 25 );
+    Person p5("张飞", 35 );
+    Person p6("关羽", 35 );
+    Person p7("诸葛亮", 35 );
+    v.push_back(p1);
+    v.push_back(p2);
+    v.push_back(p3);
+    v.push_back(p4);
+    v.push_back(p5);
+    v.push_back(p6);
+    int num = count(v.begin(),v.end(),p7);
+    cout<<"35岁："<<num<<endl;
 }
 int main() {
-
-	//test01();
-
-	test02();
-
-	system("pause");
-
-	return 0;
+    test02();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475
 ```
 
 **总结：** 统计自定义数据类型时候，需要配合重载 `operator==`
+
+
 
 #### 5.2.6 count_if
 
