@@ -6170,32 +6170,46 @@ int main() {
 **示例：**
 
 ```cpp
-#include <numeric>
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
+using namespace std;
 #include <vector>
-void test01()
-{
-	vector<int> v;
-	for (int i = 0; i <= 100; i++) {
-		v.push_back(i);
-	}
+#include <numeric>
+#include <algorithm>
+//常用算术生成算法 求元素总和
+class myprint{
+public:
+    void operator()(int val){
+        cout<<val<<" ";
+    }
+};
 
-	int total = accumulate(v.begin(), v.end(), 0);
+void test01(){
+    vector<int>v1;
 
-	cout << "total = " << total << endl;
+
+    for (int i = 0; i <= 100; ++i) {
+        v1.push_back(i);
+
+    }
+//    for_each(v1.begin(), v1.end(), myprint());
+//    cout<<endl;
+    int sum = accumulate(v1.begin(), v1.end(),0);//参数三：起始累加值
+    cout<<sum<<endl;
+
 }
 
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-12345678910111213141516171819202122
 ```
 
 **总结：**accumulate使用时头文件注意是 numeric，这个算法很实用
+
+
 
 #### 5.5.2 fill
 
@@ -6218,43 +6232,40 @@ int main() {
 **示例：**
 
 ```cpp
-#include <numeric>
+//
+// Created by JSQ on 2021/7/11.
+//
+#include <iostream>
+using namespace std;
 #include <vector>
+#include <numeric>
 #include <algorithm>
-
-class myPrint
-{
+//常用算术生成算法 填充算法
+class myprint{
 public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
+    void operator()(int val){
+        cout<<val<<" ";
+    }
 };
 
-void test01()
-{
-
-	vector<int> v;
-	v.resize(10);
-	//填充
-	fill(v.begin(), v.end(), 100);
-
-	for_each(v.begin(), v.end(), myPrint());
-	cout << endl;
+void test01(){
+    vector<int>v1;
+    v1.resize(10);
+    //后期重新填充
+    fill(v1.begin(),v1.end(),100);
+    for_each(v1.begin(), v1.end(), myprint());
+    cout<<endl;
 }
 
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233
 ```
 
 **总结**：利用fill可以将容器区间内元素填充为 指定的值
+
+
 
 ### 5.6 常用集合算法
 
@@ -6295,49 +6306,46 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
+using namespace std;
 #include <vector>
+#include <numeric>
 #include <algorithm>
-
-class myPrint
-{
+//求两个容器的交集
+class myprint{
 public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
+    void operator()(int val){
+        cout<<val<<" ";
+    }
 };
 
-void test01()
-{
-	vector<int> v1;
-	vector<int> v2;
-	for (int i = 0; i < 10; i++)
-    {
-		v1.push_back(i);
-		v2.push_back(i+5);
-	}
+void test01(){
+    vector<int>v1;
+    vector<int>v2;
+    for (int i = 0; i < 10; ++i) {
+        v1.push_back(i);
+        v2.push_back(i+5);
+    }
+    vector<int>vtarget;
+    vtarget.resize(min(v1.size(),v2.size()));
+    for_each(v1.begin(), v1.end(), myprint());
+    cout<<endl;
+    for_each(v2.begin(), v2.end(), myprint());
+    cout<<endl;
+    vector<int>::iterator  itEnd = set_intersection(v1.begin(), v1.end(),v2.begin(), v2.end(),vtarget.begin());
+    for_each(vtarget.begin(), itEnd, myprint());
+    cout<<endl;
+    cout<<*itEnd<<endl;
 
-	vector<int> vTarget;
-	//取两个里面较小的值给目标容器开辟空间
-	vTarget.resize(min(v1.size(), v2.size()));
-
-	//返回目标容器的最后一个元素的迭代器地址
-	vector<int>::iterator itEnd = 
-        set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), vTarget.begin());
-
-	for_each(vTarget.begin(), itEnd, myPrint());
-	cout << endl;
 }
 
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-123456789101112131415161718192021222324252627282930313233343536373839404142
 ```
 
 **总结：**
@@ -6345,6 +6353,8 @@ int main() {
 - 求交集的两个集合必须的有序序列
 - 目标容器开辟空间需要从**两个容器中取小值**
 - set_intersection返回值既是交集中最后一个元素的位置
+
+
 
 #### 5.6.2 set_union
 
@@ -6371,48 +6381,47 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
+using namespace std;
 #include <vector>
+#include <numeric>
 #include <algorithm>
-
-class myPrint
-{
+//求两个容器的并集
+// 求并集的两个集合必须的有序序列
+class myprint{
 public:
-	void operator()(int val)
-	{
-		cout << val << " ";
-	}
+    void operator()(int val){
+        cout<<val<<" ";
+    }
 };
 
-void test01()
-{
-	vector<int> v1;
-	vector<int> v2;
-	for (int i = 0; i < 10; i++) {
-		v1.push_back(i);
-		v2.push_back(i+5);
-	}
+void test01(){
+    vector<int>v1;
+    vector<int>v2;
+    for (int i = 0; i < 10; ++i) {
+        v1.push_back(i);
+        v2.push_back(i+5);
+    }
+    vector<int>vtarget;
+    vtarget.resize(v1.size()+v2.size());
+    for_each(v1.begin(), v1.end(), myprint());
+    cout<<endl;
+    for_each(v2.begin(), v2.end(), myprint());
+    cout<<endl;
+    vector<int>::iterator  itEnd = set_union(v1.begin(), v1.end(),v2.begin(), v2.end(),vtarget.begin());
+    for_each(vtarget.begin(), itEnd, myprint());
+    cout<<endl;
+    cout<<*itEnd<<endl;
 
-	vector<int> vTarget;
-	//取两个容器的和给目标容器开辟空间
-	vTarget.resize(v1.size() + v2.size());
-
-	//返回目标容器的最后一个元素的迭代器地址
-	vector<int>::iterator itEnd = 
-        set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), vTarget.begin());
-
-	for_each(vTarget.begin(), itEnd, myPrint());
-	cout << endl;
 }
 
 int main() {
-
-	test01();
-
-	system("pause");
-
-	return 0;
+    test01();
+    return 0;
 }
-1234567891011121314151617181920212223242526272829303132333435363738394041
 ```
 
 **总结：**
@@ -6420,6 +6429,8 @@ int main() {
 - 求并集的两个集合必须的有序序列
 - 目标容器开辟空间需要**两个容器相加**
 - set_union返回值既是并集中最后一个元素的位置
+
+
 
 #### 5.6.3 set_difference
 
