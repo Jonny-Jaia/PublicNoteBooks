@@ -5517,92 +5517,87 @@ int main() {
 **示例：**
 
 ```cpp
+//
+// Created by JSQ on 2021/7/14.
+//
+#include <iostream>
 #include <algorithm>
 #include <vector>
-
-class Greater4
-{
+#include <string>
+using namespace std;
+//统计数据count_if
+//查找内置数据
+class GreaterFour{
 public:
-	bool operator()(int val)
-	{
-		return val >= 4;
-	}
+    bool operator()(int val){
+        return val>=4;
+    }
 };
+void test01(){
+    vector<int>v;
+    v.push_back(1);
+    v.push_back(5);
+    v.push_back(2);
+    v.push_back(4);
+    v.push_back(3);
+    v.push_back(4);
+    v.push_back(4);
+    int num = count_if(v.begin(),v.end(),GreaterFour());
+    cout<<num<<endl;
 
-//内置数据类型
-void test01()
-{
-	vector<int> v;
-	v.push_back(1);
-	v.push_back(2);
-	v.push_back(4);
-	v.push_back(5);
-	v.push_back(3);
-	v.push_back(4);
-	v.push_back(4);
-
-	int num = count_if(v.begin(), v.end(), Greater4());
-
-	cout << "大于4的个数为： " << num << endl;
 }
 
-//自定义数据类型
-class Person
-{
+class Person{
 public:
-	Person(string name, int age)
-	{
-		this->m_Name = name;
-		this->m_Age = age;
-	}
-
-	string m_Name;
-	int m_Age;
+    Person(string n,int a){
+        this->name =n;
+        this->age = a;
+    }
+    //重载 == 让底层find知道如何对比Person数据类型
+    bool operator==(const Person &p){
+        if(this->age == p.age){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    string name;
+    int age;
 };
-
-class AgeLess35
-{
+class Greater30{
 public:
-	bool operator()(const Person &p)
-	{
-		return p.m_Age < 35;
-	}
+    bool operator()(const Person &p){
+        return p.age>30;
+    }
 };
-void test02()
-{
-	vector<Person> v;
-
-	Person p1("刘备", 35);
-	Person p2("关羽", 35);
-	Person p3("张飞", 35);
-	Person p4("赵云", 30);
-	Person p5("曹操", 25);
-
-	v.push_back(p1);
-	v.push_back(p2);
-	v.push_back(p3);
-	v.push_back(p4);
-	v.push_back(p5);
-
-	int num = count_if(v.begin(), v.end(), AgeLess35());
-	cout << "小于35岁的个数：" << num << endl;
+//查找自定义数据类型
+void test02(){
+    vector<Person>v;
+    Person p1("刘备", 35 );
+    Person p2("曹操", 45 );
+    Person p3("孙权", 40 );
+    Person p4("赵云", 25 );
+    Person p5("张飞", 35 );
+    Person p6("关羽", 35 );
+    Person p7("诸葛亮", 35 );
+    v.push_back(p1);
+    v.push_back(p2);
+    v.push_back(p3);
+    v.push_back(p4);
+    v.push_back(p5);
+    v.push_back(p6);
+    int num = count_if(v.begin(),v.end(),Greater30());
+    cout<<"大于35岁："<<num<<endl;
 }
-
-
 int main() {
-
-	//test01();
-
-	test02();
-
-	system("pause");
-
-	return 0;
+    test02();
+    return 0;
 }
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182
 ```
 
 **总结：**按值统计用count，按条件统计用count_if
+
+
 
 ### 5.3 常用排序算法
 
